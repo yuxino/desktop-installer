@@ -21,7 +21,7 @@ share layout coordinates; Windows supplies the controls, fonts, and DPI scaling.
 <img src="docs/preview.en.png" width="640" alt="Kiri native Windows finish page in English">
 
 *Actual Windows CI capture of the native English finish page. The UI fixture installs no application.
-[All 54 captures and the interactive gallery](https://github.com/yuxino/desktop-installer/actions/runs/34704671886) are available in the run artifact.*
+[All 54 captures and the interactive gallery](https://github.com/yuxino/desktop-installer/actions/runs/34706969270) are available in the run artifact.*
 
 - Distinct high-resolution character masters; lossless 656 × 1256, 24-bit sidebars
   filtered to the actual native control size for smooth edges.

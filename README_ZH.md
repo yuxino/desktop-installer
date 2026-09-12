@@ -19,7 +19,7 @@
 <img src="docs/preview.zh-Hans.png" width="640" alt="Kiri 简体中文原生 Windows 完成页">
 
 *Windows CI 中实际打开的中文原生完成页，预览程序不会安装应用。
-[本次运行产物](https://github.com/yuxino/desktop-installer/actions/runs/34704671886)包含全部 54 张截图和可切换语言的图集。*
+[本次运行产物](https://github.com/yuxino/desktop-installer/actions/runs/34706969270)包含全部 54 张截图和可切换语言的图集。*
 
 - 每个应用独立的高清角色源图，输出无损 656 × 1256、24 位真彩侧图；
   原生窗口按控件实际尺寸平滑缩放，减少细线与发丝的锯齿。
