@@ -8,6 +8,7 @@ import { compileProduct, productIds, readProduct, themeText, languages, layout, 
 import { decodeBundle, digest, buildTheme } from '../src/consumer.mjs';
 import { patchConfig, planSync, applyPlan } from '../scripts/sync.mjs';
 import { normalizeBitmap } from '../scripts/prepare-art.mjs';
+import { stageTauriLanguageFiles } from '../scripts/compile-nsis.mjs';
 
 const first = () => compileProduct(productIds[0]);
 const temporary = t => { const folder = mkdtempSync(join(tmpdir(), 'installer-test-')); t.after(() => rmSync(folder, { recursive: true, force: true })); return folder; };
@@ -26,7 +27,7 @@ test('all products build deterministically with native full-color 4x artwork and
     const identifiers = [];
     for (const [name] of Object.values(languages)) {
       const text = files[`${name}.nsh`].toString();
-      assert.equal(text.charCodeAt(0), 0xfeff);
+      assert.notEqual(text.charCodeAt(0), 0xfeff, 'Tauri adds the custom-language BOM');
       assert.doesNotMatch(text, /@APP@/);
       identifiers.push([...text.matchAll(/^LangString (\w+) /gm)].map(m => m[1]).sort());
       // These live Tauri variables must survive translation, not become literal text.
@@ -35,12 +36,33 @@ test('all products build deterministically with native full-color 4x artwork and
     assert.equal(identifiers[0].length, 27);
     assert.deepEqual(identifiers[0], identifiers[1]); assert.deepEqual(identifiers[0], identifiers[2]);
     const theme = files['theme.nsh'].toString();
+    assert.equal(theme.charCodeAt(0), 0xfeff, 'directly included theme keeps its UTF-8 BOM');
     assert.equal((theme.match(/^LangString /gm) || []).length, 24);
     assert.doesNotMatch(theme, /^\s*(?:Section|Exec(?:Shell|Wait)?|WriteReg\w+|Delete|RMDir)\b/m);
     assert.doesNotMatch(theme, /!define MUI_PAGE_CUSTOMFUNCTION_(?:PRE|LEAVE)/);
     assert.ok(theme.includes(`MUI_FINISHPAGE_LINK_LOCATION "${bundle.product.repository}"`));
   }
   assert.equal(fingerprints.size, productIds.length, 'every product must have its own artwork');
+});
+
+test('native fixtures use Tauri BOM rewriting without hiding malformed custom-language input', t => {
+  const folder = temporary(t), { files } = first();
+  const bom = Buffer.from([0xef, 0xbb, 0xbf]);
+  for (const [name] of Object.values(languages)) writeFileSync(join(folder, `${name}.nsh`), files[`${name}.nsh`]);
+  const staged = stageTauriLanguageFiles(folder);
+  for (const [name] of Object.values(languages)) {
+    const original = files[`${name}.nsh`];
+    const rewritten = readFileSync(join(staged, `${name}.nsh`));
+    assert.deepEqual(rewritten.subarray(0, 3), bom);
+    assert.deepEqual(rewritten.subarray(3), original, 'Tauri preserves every source byte');
+    assert.notEqual(rewritten.toString().charCodeAt(1), 0xfeff, 'NSIS must receive exactly one BOM');
+    assert.deepEqual(readFileSync(join(folder, `${name}.nsh`)), original, 'staging leaves the distributable unchanged');
+  }
+  // A bundle with the original bug must reach makensis unchanged and fail;
+  // the fixture must not silently repair it before the native compiler runs.
+  writeFileSync(join(folder, 'English.nsh'), Buffer.concat([bom, files['English.nsh']]));
+  stageTauriLanguageFiles(folder);
+  assert.deepEqual(readFileSync(join(staged, 'English.nsh')).subarray(0, 6), Buffer.concat([bom, bom]));
 });
 
 test('native layout fits the dialog, separates actions, and preserves MUI behavior', () => {

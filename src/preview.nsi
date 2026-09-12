@@ -37,9 +37,13 @@ Var PreviewReport
 !insertmacro MUI_LANGUAGE "Japanese"
 !define PRODUCTNAME "@APP@"
 !define VERSION "0.0.0"
-!include "${__FILEDIR__}\English.nsh"
-!include "${__FILEDIR__}\SimpChinese.nsh"
-!include "${__FILEDIR__}\Japanese.nsh"
+!ifndef PREVIEW_LANGUAGE_DIR
+!define PREVIEW_LANGUAGE_DIR "${__FILEDIR__}"
+!endif
+; Direct previews read plain UTF-8; CI supplies Tauri's BOM-prefixed copies.
+!include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\English.nsh"
+!include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\SimpChinese.nsh"
+!include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\Japanese.nsh"
 Function .onInit
   !ifdef PREVIEW_LANGUAGE
   StrCpy $LANGUAGE ${PREVIEW_LANGUAGE}

@@ -2,6 +2,7 @@
 
 ## 2.1.1 — 2026-09-13
 
+- Emit BOM-free custom language files for Tauri, which adds its own UTF-8 BOM; compile native fixtures through that same rewrite to catch packaging regressions.
 - Exercise all 18 native Windows previews in CI and capture welcome, directory, and finish pages.
 - Export a self-contained screenshot gallery, control geometry, DPI, and executable hashes.
 - Resample portraits to the actual native control size with GDI+ instead of STATIC's aliased stretch.

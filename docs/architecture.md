@@ -46,6 +46,13 @@ for Tauri's Run and desktop-shortcut checkboxes and the optional link. Compile f
 18 product/language combinations; real Windows DPI/layout acceptance remains a
 separate check.
 
+Custom language files are emitted as UTF-8 without a byte-order mark: Tauri's
+bundler always prepends its own UTF-8 BOM before including them. Supplying a
+BOM in the bundle produces two markers, and NSIS rejects the second as part of
+the first command. The directly included `theme.nsh` keeps its BOM. Compile
+fixtures first perform the same unconditional prefixing as Tauri; direct
+standalone previews explicitly select UTF-8 for the unprefixed language files.
+
 ## Layout refinement in 2.1.0
 
 The first HTML preview incorrectly anchored Run at the bottom and omitted

@@ -85,7 +85,9 @@ export function compileProduct(id) {
   const files = { 'theme.nsh': themeText(product), 'sidebar.bmp': sidebar };
   for (const [name] of Object.values(languages)) {
     const source = readFileSync(join(root, 'locales', `${name}.nsh`), 'utf8');
-    files[`${name}.nsh`] = Buffer.from(source.replaceAll('@APP@', product.name));
+    // Tauri prepends its own BOM when copying customLanguageFiles. A source
+    // BOM would survive as an invalid command after NSIS consumes the first.
+    files[`${name}.nsh`] = Buffer.from(source.replace(/^\ufeff+/, '').replaceAll('@APP@', product.name));
   }
   files['preview.nsi'] = bom(readFileSync(join(root, 'src/preview.nsi'), 'utf8').replaceAll('@APP@', product.name));
   const pack = { format: 'yuxino-installer-v2', version, product: id, files: {} };
