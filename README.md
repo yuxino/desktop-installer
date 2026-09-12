@@ -46,7 +46,12 @@ pages. This is a layout preview, not a Windows screenshot.
 
 With NSIS 3.11 on PATH, `npm run test:nsis` compiles a harmless preview executable
 for each product/language. These previews install and launch no application.
-CI also compiles them on Windows.
+Windows CI also opens all 18 native previews, checks Next/Back/Finish and the Run
+checkbox, and captures the welcome, directory, and finish pages. Download the
+`installer-previews-and-bundles` Actions artifact and open `windows-ui/` for PNGs,
+control bounds/text, and `results.json` (including actual DPI and executable hashes).
+The screenshots come from Windows, while the fixtures do not install app payloads;
+application installation, upgrades, and real-device DPI acceptance remain separate.
 
 ## Use it in your app
 

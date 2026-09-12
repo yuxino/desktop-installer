@@ -33,7 +33,11 @@ jobs:
           $env:NSIS_COMPILER = $compiler
           npm run test:nsis
           if ($LASTEXITCODE -ne 0) { throw 'Native fixture compilation failed' }
+      - name: Exercise and capture native Windows installer pages
+        shell: pwsh
+        run: ./scripts/windows-ui.ps1
       - uses: actions/upload-artifact@v7
+        if: always()
         with:
           name: installer-previews-and-bundles
           path: dist/

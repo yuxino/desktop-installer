@@ -43,7 +43,11 @@ npm run preview
 这是布局预览，不是 Windows 实机截图。
 
 如果 PATH 中有 NSIS 3.11，运行 `npm run test:nsis` 可编译每个应用、每种语言的
-预览程序；预览程序不会安装或启动真实应用。CI 也会在 Windows 编译这些预览。
+预览程序；预览程序不会安装或启动真实应用。Windows CI 会实际打开全部 18 个原生预览，
+检查下一步、上一步、完成和运行复选框，并截取欢迎、目录、完成页。
+下载 Actions 的 `installer-previews-and-bundles` 产物，在 `windows-ui/` 中查看 PNG、
+控件位置与文字，以及包含实际 DPI 和程序哈希的 `results.json`。
+这些是 Windows 原生窗口截图；预览程序没有真实应用内容，实际应用安装、升级和设备缩放验收仍需单独验证。
 
 ## 接入自己的项目
 
