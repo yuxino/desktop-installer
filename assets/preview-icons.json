@@ -30,12 +30,6 @@
       "sourcePath": "src-tauri/icons/icon.ico",
       "size": 103905,
       "sha256": "50a490bda20cc62f2f1d9d0d10928b65dc6ec339eab3026187901a22ed99e69b"
-    },
-    "wnacg": {
-      "sourceRepository": "https://github.com/yuxino/wnacg",
-      "sourcePath": "src-tauri/icons/kiri/icon.ico",
-      "size": 85760,
-      "sha256": "373dfa1ffeda0845c325e6bddc0d404975b1a93f89040bafe70c83f943393a43"
     }
   }
 }

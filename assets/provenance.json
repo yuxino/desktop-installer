@@ -66,22 +66,6 @@
           "prompt": "Edit this illustration for final installer art. Preserve the exact character, face, anatomy, clothes, colors, pose, linework, small prop and HALF-BODY waist crop. Her twin tails currently touch and clip off both sides. Restyle ONLY the outer hair silhouette into slightly narrower loose curves framing her shoulders, so the entirety of the hair is comfortably within the canvas. Keep the exact same twin tails, clock accessories and colors. Pull the camera back just enough to fit full hair and accessories. It is essential to leave a completely blank pure-white margin of at least 6% canvas width on each side and 6% canvas height at the top. Do not crop at forehead or top accessories. Keep roughly portrait 1024x1536. No text, frame, decoration, additional props, floor or scene. Pure #FFFFFF background. Detailed crisp anime illustration."
         }
       ]
-    },
-    "wnacg": {
-      "master": "assets/wnacg/portrait.png",
-      "width": 1024,
-      "height": 1536,
-      "sha256": "c07b39d8d97dca94e35a5cf8a6ee6725eafe3a2eb46de96fcd25e399411d4f23",
-      "generations": [
-        {
-          "reference": "wnacg-web/public/art/reading-room.webp",
-          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as exact identity reference, redraw as a clean separate HALF-BODY portrait from complete hair or hood to waist, never full body. Keep white bob with a small braid, purple eyes, black rabbit-ear headband, modest black and white long-sleeved blouse and pinafore. Hold one small closed burgundy book at chest; quiet friendly smile. Keep complete rabbit-ear headband within canvas. Wholesome petite cute chibi anime girl with youthful rounded face, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features, natural warmth. Centered narrow portrait approx 1024x1536; keep all hair, hands and small prop fully inside canvas, 6% side margins. Pure uniform white #FFFFFF background; no scene, frame, caption, watermark, floating symbols or additional people. Character takes about 88% of height. Waist is the lower crop. Harmonious series style like a high-quality Japanese software mascot."
-        },
-        {
-          "reference": "previous generated portrait, framing refinement",
-          "prompt": "Edit this illustration for final installer art. Preserve the exact character, face, anatomy, clothes, colors, pose, linework, small prop and HALF-BODY waist crop. The tip of the upright rabbit ear is currently clipped off the top; completely reconstruct that ear tip and keep both ears fully inside the canvas with white space above. Pull the camera back just enough to fit full hair and accessories. It is essential to leave a completely blank pure-white margin of at least 6% canvas width on each side and 6% canvas height at the top. Do not crop at forehead or top accessories. Keep roughly portrait 1024x1536. No text, frame, decoration, additional props, floor or scene. Pure #FFFFFF background. Detailed crisp anime illustration."
-        }
-      ]
     }
   }
 }

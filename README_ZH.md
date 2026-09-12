@@ -11,7 +11,6 @@
 <td align="center"><img src="assets/satori/sidebar.png" width="132" alt="Satori"><br>Satori</td>
 <td align="center"><img src="assets/viva/sidebar.png" width="132" alt="Viva"><br>Viva</td>
 <td align="center"><img src="assets/tick/sidebar.png" width="132" alt="Tick"><br>Tick</td>
-<td align="center"><img src="assets/wnacg/sidebar.png" width="132" alt="WNACG"><br>WNACG</td>
 </tr></table>
 
 上面是安装包实际使用的侧图。预览与原生安装界面共用位置规则，控件、字体和显示缩放由 Windows 负责。
@@ -19,7 +18,7 @@
 <img src="docs/preview.zh-Hans.png" width="640" alt="Kiri 简体中文原生 Windows 完成页">
 
 *Windows CI 中实际打开的中文原生完成页，预览程序不会安装应用。
-[本次运行产物](https://github.com/yuxino/desktop-installer/actions/runs/34706969270)包含全部 54 张截图和可切换语言的图集。*
+当前预览截图和可切换语言的图集由 [Windows CI](.github/workflows/ci.yml) 生成。*
 
 - 每个应用独立的高清角色源图，输出无损 656 × 1256、24 位真彩侧图；
   原生窗口按控件实际尺寸平滑缩放，减少细线与发丝的锯齿。
@@ -45,7 +44,7 @@ npm run preview
 这是布局预览，不是 Windows 实机截图。
 
 如果 PATH 中有 NSIS 3.11，运行 `npm run test:nsis` 可编译每个应用、每种语言的
-预览程序；预览程序不会安装或启动真实应用。Windows CI 会实际打开全部 18 个原生预览，
+预览程序；预览程序不会安装或启动真实应用。Windows CI 会实际打开全部 15 个原生预览，
 检查下一步、上一步、完成和运行复选框，并截取欢迎、目录、完成页。
 下载 Actions 的 `installer-previews-and-bundles` 产物，在 `windows-ui/` 中查看 `index.html` 图集、PNG、
 控件位置与文字，以及包含实际 DPI 和程序哈希的 `results.json`。
@@ -60,7 +59,7 @@ node scripts/sync.mjs --project ../my-app --product my-app
 ```
 
 [接入说明](docs/integration.md) 包含资料格式、立绘处理、自定义安装器、构建命令和升级方式。
-名称、发布者和 GitHub 地址都可以替换，内置的六个应用是可参考的实例。
+名称、发布者和 GitHub 地址都可以替换，内置的五个应用是可参考的实例。
 
 如果所有已登记应用都在同一个目录下：
 

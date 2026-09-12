@@ -1,6 +1,6 @@
 # Artwork sources
 
-All six illustrations were generated with the built-in OpenAI image-generation
+All five illustrations were generated with the built-in OpenAI image-generation
 tool on 2026-09-12, then visually reviewed. They are new half-body illustrations
 based on the existing mascots of the corresponding yuxino projects. No API key
 or generation service is needed to build this repository.
@@ -12,7 +12,6 @@ or generation service is needed to build this repository.
 | Satori | `satori-web/public/satori-portrait.png` | Gray bob, muted violet eyes, ivory cat-ear hood, gold bookmark clasp, cream book. |
 | Viva | `viva-web/public/art/writing-studio-petite.webp` | Brown bob and eyes, gold triangular clip, ivory/brown sailor blouse, notebook and pen. |
 | Tick | `tick-web/public/timekeeper.webp` | Mint twin tails, teal eyes, clock bows, ivory/teal vintage clothes, small closed pocket watch. |
-| WNACG | `wnacg-web/public/art/reading-room.webp` | White bob and small braid, violet eyes, black rabbit headband, modest black/white blouse, closed burgundy book. |
 
 The website paths above describe provenance; references are not runtime
 dependencies and are not required in a contributor's checkout.
@@ -29,8 +28,8 @@ frame, caption, watermark, floating symbols, or additional people. Keep the
 character's existing colors and identity; do not use a generic shared avatar.
 
 The initial full-body experiment was discarded after the requested framing
-changed to half-body. Tick and WNACG received an additional framing pass to keep
-twin tails and rabbit ears within the canvas. Per-image generation prompts and
+changed to half-body. Tick received an additional framing pass to keep the
+twin tails within the canvas. Per-image generation prompts and
 final master hashes are recorded in `assets/provenance.json`.
 
 ## Packaging
