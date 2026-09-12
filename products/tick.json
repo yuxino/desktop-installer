@@ -1,0 +1,17 @@
+{
+  "id": "tick",
+  "name": "Tick",
+  "repository": "https://github.com/yuxino/tick",
+  "directory": "tick",
+  "description": {
+    "en": "Schedule scripts and keep track of their runs in one place.",
+    "zh-Hans": "安排脚本什么时候运行，也把每次结果看清楚。",
+    "ja": "スクリプトの実行予定と結果を、ひとつの場所で管理。"
+  },
+  "tip": {
+    "en": "Open Tick to set up your first task.",
+    "zh-Hans": "打开 Tick，安排好第一件小事吧。",
+    "ja": "Tick を開いて、最初のタスクを設定しましょう。"
+  },
+  "publisher": "yuxino"
+}

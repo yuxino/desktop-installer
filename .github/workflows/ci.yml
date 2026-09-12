@@ -1,0 +1,41 @@
+name: Installer source
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: installer-source-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npm run build
+      - run: npm run preview
+      - name: Compile all native previews
+        shell: pwsh
+        run: |
+          $compiler = "${env:ProgramFiles(x86)}\NSIS\makensis.exe"
+          if (!(Test-Path $compiler)) {
+            choco install nsis --version=3.11 --yes --no-progress
+            if ($LASTEXITCODE -ne 0) { throw 'NSIS installation failed' }
+          }
+          $env:NSIS_COMPILER = $compiler
+          npm run test:nsis
+          if ($LASTEXITCODE -ne 0) { throw 'Native fixture compilation failed' }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: installer-previews-and-bundles
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

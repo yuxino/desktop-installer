@@ -1,0 +1,17 @@
+{
+  "id": "mimi",
+  "name": "Mimi",
+  "repository": "https://github.com/yuxino/mimi",
+  "directory": "mimi",
+  "description": {
+    "en": "Live translated subtitles for the audio playing on your computer.",
+    "zh-Hans": "给电脑里正在播放的声音，配上看得懂的字幕。",
+    "ja": "パソコンで再生中の音声に、翻訳字幕を添えます。"
+  },
+  "tip": {
+    "en": "Open settings to configure a service and choose your subtitle languages.",
+    "zh-Hans": "先到设置里配好服务，选好字幕语言吧。",
+    "ja": "設定でサービスの接続と字幕の言語を準備しましょう。"
+  },
+  "publisher": "yuxino"
+}

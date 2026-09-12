@@ -1,0 +1,17 @@
+{
+  "id": "viva",
+  "name": "Viva",
+  "repository": "https://github.com/yuxino/viva",
+  "directory": "viva",
+  "description": {
+    "en": "A calm, local workspace for Markdown and your next idea.",
+    "zh-Hans": "给文字和灵感，留一个安静的地方。",
+    "ja": "Markdown と次のアイデアのための、静かな作業場所。"
+  },
+  "tip": {
+    "en": "Open a Markdown file or start a new note.",
+    "zh-Hans": "打开一篇 Markdown，或者写下第一句话。",
+    "ja": "Markdown を開くか、新しい文章を書き始めましょう。"
+  },
+  "publisher": "yuxino"
+}

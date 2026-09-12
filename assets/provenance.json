@@ -1,0 +1,87 @@
+{
+  "mode": "built-in image_gen",
+  "date": "2026-09-12",
+  "license": "MIT",
+  "products": {
+    "kiri": {
+      "master": "assets/kiri/portrait.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "1672efe64de8aec920e17a8779e6b8a4bd0d98e210308022eec0edbfa3a42bbe",
+      "generations": [
+        {
+          "reference": "kiri-web/site-public/visuals/kiri-portrait.webp",
+          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as identity reference, redraw as a clean separate HALF-BODY portrait, from complete hair/ahoge to waist, never full body. Kiri: preserve her short silver-lavender bob, purple eyes, K hair clip, lilac bow, white blouse and lavender accents. She holds a tiny compact camera gently at chest height and smiles naturally. Wholesome petite cute chibi anime girl, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features. Centered narrow portrait approx 1024x1536; keep all hair, hands, and relevant small prop fully inside canvas, generous 6% side margins, charming open expression facing viewer. Pure uniform white #FFFFFF background, no scene, no frame, no decorative text, no watermark, no caption. Character is the main visual, using about 88% of canvas height. The lower edge ends naturally at the waist. Harmonious series style, no extra people. No circle logo background or baked-in brand wordmark."
+        }
+      ]
+    },
+    "mimi": {
+      "master": "assets/mimi/portrait.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "2f45d7e4056d7b4fe1a8bad0a4f94c42a098ee9bdc39293ecdd85af9c922fad3",
+      "generations": [
+        {
+          "reference": "mimi-web/public/mimi/mimi-mascot-master.png",
+          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as identity reference, redraw as a clean separate HALF-BODY portrait, from complete hair/ahoge to waist, never full body. Mimi: preserve her pastel pink twin tails, violet eyes, M hair clip, lilac flower bows and modest white-pink ruffled blouse. She wears small soft pink over-ear headphones (no microphone) and lightly touches one earcup, with a cheerful welcoming smile. Mimi listens to system audio and translates subtitles. Wholesome petite cute chibi anime girl, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features. Centered narrow portrait approx 1024x1536; keep all hair, hands, and relevant small prop fully inside canvas, generous 6% side margins, charming open expression facing viewer. Pure uniform white #FFFFFF background, no scene, no frame, no decorative text, no watermark, no caption. Character is the main visual, using about 88% of canvas height. The lower edge ends naturally at the waist. Harmonious series style, no extra people. No circle logo background or baked-in brand wordmark."
+        }
+      ]
+    },
+    "satori": {
+      "master": "assets/satori/portrait.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "5c5c6a2fe555b6584a37f294e40577c69cfcd43e19e6c95118174bbeb7e56d28",
+      "generations": [
+        {
+          "reference": "satori-web/public/satori-portrait.png",
+          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as exact identity reference, redraw as a clean separate HALF-BODY portrait from complete hair or hood to waist, never full body. Satori: preserve the silver-gray bob, soft purple eyes, ivory cat-ear hood and tiny brass bookmark clasp from the reference. A cozy bookish girl holding one closed cream hardback at chest level with both hands, slight thoughtful smile. Ivory hooded cape over a modest warm-gray long-sleeved outfit. The hood and cat ears are complete in frame. Wholesome petite cute chibi anime girl with youthful rounded face, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features, natural warmth. Centered narrow portrait approx 1024x1536; keep all hair, hands and small prop fully inside canvas, 6% side margins. Pure uniform white #FFFFFF background; no scene, frame, caption, watermark, floating symbols or additional people. Character takes about 88% of height. Waist is the lower crop. Harmonious series style like a high-quality Japanese software mascot."
+        }
+      ]
+    },
+    "viva": {
+      "master": "assets/viva/portrait.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "1dc524d97e6541584c68a4a65c5d726d619aca6e19f25b2b9b46e8b2e4a0f443",
+      "generations": [
+        {
+          "reference": "viva-web/public/art/writing-studio-petite.webp",
+          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as exact identity reference, redraw as a clean separate HALF-BODY portrait from complete hair or hood to waist, never full body. Viva: preserve the short dark chocolate bob, brown eyes, small gold triangular hairclip and ivory sailor-collar blouse with dark brown trim and bow. A warm literary girl holding a little cream notebook against her chest and a fountain pen, gentle welcoming smile. Remove the desk and room. Brown/ivory with tiny brass details. Wholesome petite cute chibi anime girl with youthful rounded face, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features, natural warmth. Centered narrow portrait approx 1024x1536; keep all hair, hands and small prop fully inside canvas, 6% side margins. Pure uniform white #FFFFFF background; no scene, frame, caption, watermark, floating symbols or additional people. Character takes about 88% of height. Waist is the lower crop. Harmonious series style like a high-quality Japanese software mascot."
+        }
+      ]
+    },
+    "tick": {
+      "master": "assets/tick/portrait.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "f5d145368afa2dcf6e5ad0b4837570fddaa9735d78a7257df0b2f8fb76246fea",
+      "generations": [
+        {
+          "reference": "tick-web/public/timekeeper.webp",
+          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as exact identity reference, redraw as a clean separate HALF-BODY portrait from complete hair or hood to waist, never full body. Keep mint twin tails, teal eyes, small clock hairbows, ivory and muted teal vintage long-sleeved outfit. Hold one small closed pocket watch naturally in both hands near the chest; gentle cheerful smile. No oversized clock. Wholesome petite cute chibi anime girl with youthful rounded face, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features, natural warmth. Centered narrow portrait approx 1024x1536; keep all hair, hands and small prop fully inside canvas, 6% side margins. Pure uniform white #FFFFFF background; no scene, frame, caption, watermark, floating symbols or additional people. Character takes about 88% of height. Waist is the lower crop. Harmonious series style like a high-quality Japanese software mascot."
+        },
+        {
+          "reference": "previous generated portrait, framing refinement",
+          "prompt": "Edit this illustration for final installer art. Preserve the exact character, face, anatomy, clothes, colors, pose, linework, small prop and HALF-BODY waist crop. Her twin tails currently touch and clip off both sides. Restyle ONLY the outer hair silhouette into slightly narrower loose curves framing her shoulders, so the entirety of the hair is comfortably within the canvas. Keep the exact same twin tails, clock accessories and colors. Pull the camera back just enough to fit full hair and accessories. It is essential to leave a completely blank pure-white margin of at least 6% canvas width on each side and 6% canvas height at the top. Do not crop at forehead or top accessories. Keep roughly portrait 1024x1536. No text, frame, decoration, additional props, floor or scene. Pure #FFFFFF background. Detailed crisp anime illustration."
+        }
+      ]
+    },
+    "wnacg": {
+      "master": "assets/wnacg/portrait.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "c07b39d8d97dca94e35a5cf8a6ee6725eafe3a2eb46de96fcd25e399411d4f23",
+      "generations": [
+        {
+          "reference": "wnacg-web/public/art/reading-room.webp",
+          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as exact identity reference, redraw as a clean separate HALF-BODY portrait from complete hair or hood to waist, never full body. Keep white bob with a small braid, purple eyes, black rabbit-ear headband, modest black and white long-sleeved blouse and pinafore. Hold one small closed burgundy book at chest; quiet friendly smile. Keep complete rabbit-ear headband within canvas. Wholesome petite cute chibi anime girl with youthful rounded face, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features, natural warmth. Centered narrow portrait approx 1024x1536; keep all hair, hands and small prop fully inside canvas, 6% side margins. Pure uniform white #FFFFFF background; no scene, frame, caption, watermark, floating symbols or additional people. Character takes about 88% of height. Waist is the lower crop. Harmonious series style like a high-quality Japanese software mascot."
+        },
+        {
+          "reference": "previous generated portrait, framing refinement",
+          "prompt": "Edit this illustration for final installer art. Preserve the exact character, face, anatomy, clothes, colors, pose, linework, small prop and HALF-BODY waist crop. The tip of the upright rabbit ear is currently clipped off the top; completely reconstruct that ear tip and keep both ears fully inside the canvas with white space above. Pull the camera back just enough to fit full hair and accessories. It is essential to leave a completely blank pure-white margin of at least 6% canvas width on each side and 6% canvas height at the top. Do not crop at forehead or top accessories. Keep roughly portrait 1024x1536. No text, frame, decoration, additional props, floor or scene. Pure #FFFFFF background. Detailed crisp anime illustration."
+        }
+      ]
+    }
+  }
+}

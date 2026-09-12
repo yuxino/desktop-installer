@@ -1,0 +1,17 @@
+{
+  "id": "satori",
+  "name": "Satori",
+  "repository": "https://github.com/yuxino/satori",
+  "directory": "satori",
+  "description": {
+    "en": "A quiet place to read PDFs and explore what you are learning.",
+    "zh-Hans": "翻开一本 PDF，慢慢读，也慢慢弄懂。",
+    "ja": "PDF を読みながら、学びを深める静かな場所。"
+  },
+  "tip": {
+    "en": "Open a PDF to begin reading.",
+    "zh-Hans": "打开一本 PDF，开始今天的阅读吧。",
+    "ja": "PDF を開いて、今日の読書を始めましょう。"
+  },
+  "publisher": "yuxino"
+}

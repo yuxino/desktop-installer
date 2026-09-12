@@ -1,0 +1,17 @@
+{
+  "id": "kiri",
+  "name": "Kiri",
+  "repository": "https://github.com/yuxino/kiri",
+  "directory": "kiri",
+  "description": {
+    "en": "Capture screenshots, recognize text and record your screen.",
+    "zh-Hans": "截图、识字、录屏，把想留住的瞬间收好。",
+    "ja": "スクリーンショット、文字認識、画面録画をひとつに。"
+  },
+  "tip": {
+    "en": "Press Shift+Ctrl+A for your first capture.",
+    "zh-Hans": "按 Shift+Ctrl+A，试着截下第一张图吧。",
+    "ja": "Shift+Ctrl+A で最初の一枚を撮ってみましょう。"
+  },
+  "publisher": "yuxino"
+}
