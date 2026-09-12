@@ -1,14 +1,16 @@
 ; Presentation only. Keep MUI2's page generation and all native callbacks.
 ; Called after the page's full-window layout, before it is shown.
-; MapDialogRect uses this dialog's font/DPI; never hardcode physical pixels.
-!macro YuxinoMoveControl HANDLE DIALOG X Y WIDTH HEIGHT
+; The main dialog owns the selected language font and its dialog-unit metrics.
+; nsDialogs' child keeps its template metrics after WM_SETFONT, so mapping with
+; that child can move labels underneath the wider, correctly sized portrait.
+!macro YuxinoMoveControl HANDLE X Y WIDTH HEIGHT
   Push $0
   Push $1
   Push $2
   Push $3
   Push $4
   System::Call '*(i ${X}, i ${Y}, i ${WIDTH}, i ${HEIGHT}) p.r0'
-  System::Call 'user32::MapDialogRect(p ${DIALOG}, p r0)'
+  System::Call 'user32::MapDialogRect(p $HWNDPARENT, p r0)'
   System::Call '*$0(i .r1, i .r2, i .r3, i .r4)'
   System::Free $0
   ; SWP_NOZORDER | SWP_NOACTIVATE preserves focus, tab order, and handlers.
@@ -38,8 +40,8 @@
       Call "${YUXINO_WELCOME_PREVIOUS_SHOW}"
       !undef YUXINO_WELCOME_PREVIOUS_SHOW
     !endif
-    !insertmacro YuxinoMoveControl $mui.WelcomePage.Title $mui.WelcomePage @TITLE@
-    !insertmacro YuxinoMoveControl $mui.WelcomePage.Text $mui.WelcomePage @WELCOME_TEXT@
+    !insertmacro YuxinoMoveControl $mui.WelcomePage.Title @TITLE@
+    !insertmacro YuxinoMoveControl $mui.WelcomePage.Text @WELCOME_TEXT@
   FunctionEnd
   !verbose pop
 !macroend
@@ -71,18 +73,18 @@
     !endif
     ; Native reboot instructions and radio buttons keep their original layout.
     IfRebootFlag yuxino_finish_native
-    !insertmacro YuxinoMoveControl $mui.FinishPage.Title $mui.FinishPage @TITLE@
-    !insertmacro YuxinoMoveControl $mui.FinishPage.Text $mui.FinishPage @FINISH_TEXT@
+    !insertmacro YuxinoMoveControl $mui.FinishPage.Title @TITLE@
+    !insertmacro YuxinoMoveControl $mui.FinishPage.Text @FINISH_TEXT@
     !ifdef YUXINO_LAYOUT_RUN
-      !insertmacro YuxinoMoveControl $mui.FinishPage.Run $mui.FinishPage @RUN@
+      !insertmacro YuxinoMoveControl $mui.FinishPage.Run @RUN@
       !undef YUXINO_LAYOUT_RUN
     !endif
     !ifdef YUXINO_LAYOUT_SHORTCUT
-      !insertmacro YuxinoMoveControl $mui.FinishPage.ShowReadme $mui.FinishPage @SHORTCUT@
+      !insertmacro YuxinoMoveControl $mui.FinishPage.ShowReadme @SHORTCUT@
       !undef YUXINO_LAYOUT_SHORTCUT
     !endif
     !ifdef YUXINO_LAYOUT_LINK
-      !insertmacro YuxinoMoveControl $mui.FinishPage.Link $mui.FinishPage @LINK@
+      !insertmacro YuxinoMoveControl $mui.FinishPage.Link @LINK@
       !undef YUXINO_LAYOUT_LINK
     !endif
     yuxino_finish_native:

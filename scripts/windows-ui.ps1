@@ -13,10 +13,9 @@ using System.Text;
 
 public static class InstallerUI {
   public struct RECT { public int Left, Top, Right, Bottom; }
-  private struct BITMAP { public int Type, Width, Height, WidthBytes; public ushort Planes, BitsPixel; public IntPtr Bits; }
   public class Control {
     public long Handle;
-    public int Id, X, Y, Width, Height, ImageWidth, ImageHeight, ImageBits;
+    public int Id, X, Y, Width, Height;
     public string Class, Text;
     public bool Enabled;
   }
@@ -37,7 +36,7 @@ public static class InstallerUI {
   [DllImport("user32.dll")] public static extern uint GetDpiForWindow(IntPtr window);
   [DllImport("user32.dll")] private static extern bool SetProcessDpiAwarenessContext(IntPtr context);
   [DllImport("user32.dll")] private static extern bool RedrawWindow(IntPtr window, IntPtr rect, IntPtr region, uint flags);
-  [DllImport("gdi32.dll", EntryPoint="GetObjectW")] private static extern int GetBitmapObject(IntPtr bitmap, int size, out BITMAP value);
+  [DllImport("kernel32.dll", CharSet=CharSet.Unicode)] public static extern int GetPrivateProfileInt(string section, string key, int fallback, string path);
   public static void SetDpi() { SetProcessDpiAwarenessContext(new IntPtr(-4)); }
   public static string Text(IntPtr window) {
     var text = new StringBuilder(8192); GetWindowText(window, text, text.Capacity); return text.ToString();
@@ -61,13 +60,6 @@ public static class InstallerUI {
       var control = new Control { Handle=window.ToInt64(), Id=GetDlgCtrlID(window),
         X=rect.Left-frame.Left, Y=rect.Top-frame.Top, Width=rect.Right-rect.Left,
         Height=rect.Bottom-rect.Top, Class=name.ToString(), Text=Text(window), Enabled=IsWindowEnabled(window) };
-      if(control.Class == "Static") {
-        var image = SendMessage(window, 0x173, IntPtr.Zero, IntPtr.Zero);
-        BITMAP bitmap;
-        if(image != IntPtr.Zero && GetBitmapObject(image, Marshal.SizeOf<BITMAP>(), out bitmap) > 0) {
-          control.ImageWidth=bitmap.Width; control.ImageHeight=bitmap.Height; control.ImageBits=bitmap.BitsPixel;
-        }
-      }
       controls.Add(control);
       return true;
     }, IntPtr.Zero);
@@ -119,7 +111,7 @@ function Wait-Text([IntPtr]$Window, [string]$Text) {
   } while ([DateTime]::UtcNow -lt $until)
   throw "Expected native text not found: $Text; visible: $($controls.Text -join ' | ')"
 }
-function Save-Page([IntPtr]$Window, [string]$Name) {
+function Save-Page([IntPtr]$Window, [string]$Name, [string]$BitmapReport = '') {
   Start-Sleep -Milliseconds 150
   $controls = [InstallerUI]::Controls($Window)
   $rect = [InstallerUI+RECT]::new()
@@ -148,12 +140,24 @@ function Save-Page([IntPtr]$Window, [string]$Name) {
     if ($colors.Count -lt $minimumColors) { throw "Blank or incomplete native capture: $($colors.Count) colors" }
   } finally { $bitmap.Dispose() }
   $controls | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $Output "$Name.controls.json") -Encoding utf8
-  if ($Name -match '-(welcome|finish)$') {
-    $portraits = @($controls | Where-Object { $_.ImageWidth -gt 0 -and $_.Height -gt 150 })
-    if ($portraits.Count -ne 1) { throw 'Native portrait bitmap missing' }
-    $portrait = $portraits[0]
-    if ($portrait.ImageWidth -ne $portrait.Width -or $portrait.ImageHeight -ne $portrait.Height -or $portrait.ImageBits -lt 24) {
-      throw "Portrait was not rendered at native control size: $($portrait | ConvertTo-Json -Compress)"
+  if ($Name -match '-(welcome|finish)$' -and $BitmapReport) {
+    $page = $Matches[1]
+    $portrait = @($controls | Where-Object Id -eq 1200)
+    $content = @($controls | Where-Object { $_.Class -eq '#32770' -and $_.Id -eq 0 })
+    if ($portrait.Count -ne 1 -or $content.Count -ne 1) { throw 'Native page controls missing' }
+    foreach ($control in @($controls | Where-Object { $_.Id -ge 1201 -and $_.Text })) {
+      if ($control.X -lt $portrait[0].X + $portrait[0].Width -or
+          $control.X + $control.Width -gt $content[0].X + $content[0].Width -or
+          $control.Y + $control.Height -gt $content[0].Y + $content[0].Height) {
+        throw "Text control overlaps the portrait or leaves the page: $($control.Text)"
+      }
+    }
+    $metrics = @{}
+    foreach ($key in @('width','height','bits','controlWidth','controlHeight')) {
+      $metrics[$key] = [InstallerUI]::GetPrivateProfileInt($page, $key, -1, $BitmapReport)
+    }
+    if ($metrics.width -lt 1 -or $metrics.width -ne $metrics.controlWidth -or $metrics.height -ne $metrics.controlHeight -or $metrics.bits -lt 24) {
+      throw "Portrait was not rendered at native control size: $($metrics | ConvertTo-Json -Compress)"
     }
   }
   return $controls
@@ -167,11 +171,12 @@ foreach ($profile in Get-ChildItem (Join-Path $PSScriptRoot '../products') -Filt
     $window = [IntPtr]::Zero
     try {
       $exe = Join-Path $Dist "$($product.id)/preview-$locale.exe"
-      $process = Start-Process -FilePath $exe -PassThru
+      $bitmapReport = Join-Path $Output "$name.bitmap.ini"
+      $process = Start-Process -FilePath $exe -ArgumentList ('/UIREPORT="' + $bitmapReport + '"') -PassThru
       $window = Wait-Window $process
       $welcome = $messages[$locale].welcomeTitle.Replace('{app}', $product.name)
       Wait-Text $window $welcome
-      $null = Save-Page $window "$name-welcome"
+      $null = Save-Page $window "$name-welcome" $bitmapReport
       [InstallerUI]::Navigate($window, 1)
       # The Directory page owns a native path edit; it must be reachable and Back must work.
       $until = [DateTime]::UtcNow.AddSeconds(10)
@@ -188,7 +193,7 @@ foreach ($profile in Get-ChildItem (Join-Path $PSScriptRoot '../products') -Filt
       Start-Sleep -Milliseconds 150
       [InstallerUI]::Navigate($window, 1)
       Wait-Text $window $messages[$locale].finishTitle
-      $controls = Save-Page $window "$name-finish"
+      $controls = Save-Page $window "$name-finish" $bitmapReport
       $runText = $messages[$locale].runText.Replace('{app}', $product.name)
       $starText = $messages[$locale].starLink.Replace('{app}', $product.name)
       $run = @($controls | Where-Object Text -eq $runText)
