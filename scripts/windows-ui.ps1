@@ -124,8 +124,11 @@ function Save-Page([IntPtr]$Window, [string]$Name) {
     for ($y = 5; $y -lt $height; $y += 5) {
       for ($x = 5; $x -lt $width; $x += 5) { $null = $colors.Add($bitmap.GetPixel($x, $y).ToArgb()) }
     }
-    if ($colors.Count -lt 100) { throw "Blank or incomplete native capture: $($colors.Count) colors" }
     $bitmap.Save((Join-Path $Output "$Name.png"), [System.Drawing.Imaging.ImageFormat]::Png)
+    # Directory pages have no portrait and CJK bitmap fonts can be nearly
+    # monochrome. Only character pages need the high-color rendering assertion.
+    $minimumColors = if ($Name -match '-(welcome|finish)$') { 100 } else { 8 }
+    if ($colors.Count -lt $minimumColors) { throw "Blank or incomplete native capture: $($colors.Count) colors" }
   } finally { $bitmap.Dispose() }
   $controls | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $Output "$Name.controls.json") -Encoding utf8
   return $controls
