@@ -1,4 +1,4 @@
-; Compile-only fixture. No real app is installed, launched, or uninstalled.
+; Native UI fixture. No real app is installed, launched, or uninstalled.
 Unicode true
 ManifestDPIAware true
 ManifestDPIAwareness PerMonitorV2
@@ -13,7 +13,6 @@ OutFile "preview-only-setup.exe"
 InstallDir "$TEMP\yuxino-installer-preview"
 !include "MUI2.nsh"
 !include "${__FILEDIR__}\theme.nsh"
-Caption "@APP@ UI preview - no application will be installed"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${__FILEDIR__}\sidebar.bmp"
 !define MUI_PAGE_CUSTOMFUNCTION_PRE PreviewNoop
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW PreviewNoop

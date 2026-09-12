@@ -22,7 +22,8 @@ share layout coordinates; Windows supplies the controls, fonts, and DPI scaling.
 
 *Layout preview using the real artwork and copy, not a Windows screenshot.*
 
-- Distinct high-resolution character masters; lossless 656 × 1256, 24-bit sidebars.
+- Distinct high-resolution character masters; lossless 656 × 1256, 24-bit sidebars
+  filtered to the actual native control size for smooth edges.
 - English, Simplified Chinese, and Japanese, including Tauri maintenance/error dialogs.
 - Native welcome and finish pages with an optional, click-only GitHub/Star link.
 - Pinned, hash-checked offline bundles. Application builds need only Node.js.
@@ -49,7 +50,7 @@ for each product/language. These previews install and launch no application.
 Windows CI also opens all 18 native previews, checks Next/Back/Finish and the Run
 checkbox, and captures the welcome, directory, and finish pages. Download the
 `installer-previews-and-bundles` Actions artifact and open `windows-ui/` for PNGs,
-control bounds/text, and `results.json` (including actual DPI and executable hashes).
+`index.html`, control bounds/text, and `results.json` (including actual DPI and executable hashes).
 The screenshots come from Windows, while the fixtures do not install app payloads;
 application installation, upgrades, and real-device DPI acceptance remain separate.
 

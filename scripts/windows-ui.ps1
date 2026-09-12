@@ -13,9 +13,10 @@ using System.Text;
 
 public static class InstallerUI {
   public struct RECT { public int Left, Top, Right, Bottom; }
+  private struct BITMAP { public int Type, Width, Height, WidthBytes; public ushort Planes, BitsPixel; public IntPtr Bits; }
   public class Control {
     public long Handle;
-    public int Id, X, Y, Width, Height;
+    public int Id, X, Y, Width, Height, ImageWidth, ImageHeight, ImageBits;
     public string Class, Text;
     public bool Enabled;
   }
@@ -36,6 +37,7 @@ public static class InstallerUI {
   [DllImport("user32.dll")] public static extern uint GetDpiForWindow(IntPtr window);
   [DllImport("user32.dll")] private static extern bool SetProcessDpiAwarenessContext(IntPtr context);
   [DllImport("user32.dll")] private static extern bool RedrawWindow(IntPtr window, IntPtr rect, IntPtr region, uint flags);
+  [DllImport("gdi32.dll", EntryPoint="GetObjectW")] private static extern int GetBitmapObject(IntPtr bitmap, int size, out BITMAP value);
   public static void SetDpi() { SetProcessDpiAwarenessContext(new IntPtr(-4)); }
   public static string Text(IntPtr window) {
     var text = new StringBuilder(8192); GetWindowText(window, text, text.Capacity); return text.ToString();
@@ -56,9 +58,17 @@ public static class InstallerUI {
       if (!IsWindowVisible(window)) return true;
       RECT rect; GetWindowRect(window, out rect);
       var name = new StringBuilder(128); GetClassName(window, name, name.Capacity);
-      controls.Add(new Control { Handle=window.ToInt64(), Id=GetDlgCtrlID(window),
+      var control = new Control { Handle=window.ToInt64(), Id=GetDlgCtrlID(window),
         X=rect.Left-frame.Left, Y=rect.Top-frame.Top, Width=rect.Right-rect.Left,
-        Height=rect.Bottom-rect.Top, Class=name.ToString(), Text=Text(window), Enabled=IsWindowEnabled(window) });
+        Height=rect.Bottom-rect.Top, Class=name.ToString(), Text=Text(window), Enabled=IsWindowEnabled(window) };
+      if(control.Class == "Static") {
+        var image = SendMessage(window, 0x173, IntPtr.Zero, IntPtr.Zero);
+        BITMAP bitmap;
+        if(image != IntPtr.Zero && GetBitmapObject(image, Marshal.SizeOf<BITMAP>(), out bitmap) > 0) {
+          control.ImageWidth=bitmap.Width; control.ImageHeight=bitmap.Height; control.ImageBits=bitmap.BitsPixel;
+        }
+      }
+      controls.Add(control);
       return true;
     }, IntPtr.Zero);
     return controls.ToArray();
@@ -82,6 +92,13 @@ $null = New-Item -ItemType Directory -Force -Path $Output
 $Output = (Resolve-Path $Output).Path
 $messages = Get-Content (Join-Path $PSScriptRoot '../locales/messages.json') -Raw | ConvertFrom-Json -AsHashtable
 $results = [System.Collections.Generic.List[object]]::new()
+$fonts = [System.Drawing.Text.InstalledFontCollection]::new()
+try {
+  @{ os=[Environment]::OSVersion.VersionString; powerShell=$PSVersionTable.PSVersion.ToString();
+     source=$env:GITHUB_SHA; run=$env:GITHUB_RUN_ID; culture=(Get-Culture).Name;
+     uiFonts=@($fonts.Families.Name | Where-Object { $_ -in @('Segoe UI', 'Microsoft YaHei UI', 'Yu Gothic UI') })
+  } | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $Output 'environment.json') -Encoding utf8
+} finally { $fonts.Dispose() }
 
 function Wait-Window($Process) {
   $until = [DateTime]::UtcNow.AddSeconds(20)
@@ -131,6 +148,14 @@ function Save-Page([IntPtr]$Window, [string]$Name) {
     if ($colors.Count -lt $minimumColors) { throw "Blank or incomplete native capture: $($colors.Count) colors" }
   } finally { $bitmap.Dispose() }
   $controls | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $Output "$Name.controls.json") -Encoding utf8
+  if ($Name -match '-(welcome|finish)$') {
+    $portraits = @($controls | Where-Object { $_.ImageWidth -gt 0 -and $_.Height -gt 150 })
+    if ($portraits.Count -ne 1) { throw 'Native portrait bitmap missing' }
+    $portrait = $portraits[0]
+    if ($portrait.ImageWidth -ne $portrait.Width -or $portrait.ImageHeight -ne $portrait.Height -or $portrait.ImageBits -lt 24) {
+      throw "Portrait was not rendered at native control size: $($portrait | ConvertTo-Json -Compress)"
+    }
+  }
   return $controls
 }
 

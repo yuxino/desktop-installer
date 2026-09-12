@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.1 — 2026-09-13
+
+- Exercise all 18 native Windows previews in CI and capture welcome, directory, and finish pages.
+- Export a self-contained screenshot gallery, control geometry, DPI, and executable hashes.
+- Resample portraits to the actual native control size with GDI+ instead of STATIC's aliased stretch.
+- Use standard Windows UI fonts for English, Simplified Chinese, and Japanese.
+- Match native localized captions in preview executables while keeping their payload empty.
+
 ## 2.1.0 — 2026-09-12
 
 - Refine welcome/finish spacing with shared native and preview geometry.

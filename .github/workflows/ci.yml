@@ -36,6 +36,8 @@ jobs:
       - name: Exercise and capture native Windows installer pages
         shell: pwsh
         run: ./scripts/windows-ui.ps1
+      - name: Build native screenshot gallery
+        run: node scripts/native-gallery.mjs
       - uses: actions/upload-artifact@v7
         if: always()
         with:
