@@ -16,9 +16,10 @@
 
 上面是安装包实际使用的侧图。预览与原生安装界面共用位置规则，控件、字体和显示缩放由 Windows 负责。
 
-<img src="docs/preview.zh-Hans.png" width="640" alt="Kiri 简体中文完成页布局预览">
+<img src="docs/preview.zh-Hans.png" width="640" alt="Kiri 简体中文原生 Windows 完成页">
 
-*使用实际素材和文案的布局预览，不是 Windows 实机截图。*
+*Windows CI 中实际打开的中文原生完成页，预览程序不会安装应用。
+[本次运行产物](https://github.com/yuxino/desktop-installer/actions/runs/34704671886)包含全部 54 张截图和可切换语言的图集。*
 
 - 每个应用独立的高清角色源图，输出无损 656 × 1256、24 位真彩侧图；
   原生窗口按控件实际尺寸平滑缩放，减少细线与发丝的锯齿。

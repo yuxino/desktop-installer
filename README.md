@@ -18,9 +18,10 @@ its own half-body mascot, welcome message, and optional GitHub link.
 The images above are the actual sidebar assets. The preview and native installer
 share layout coordinates; Windows supplies the controls, fonts, and DPI scaling.
 
-<img src="docs/preview.en.png" width="640" alt="Kiri finish-page layout preview in English">
+<img src="docs/preview.en.png" width="640" alt="Kiri native Windows finish page in English">
 
-*Layout preview using the real artwork and copy, not a Windows screenshot.*
+*Actual Windows CI capture of the native English finish page. The UI fixture installs no application.
+[All 54 captures and the interactive gallery](https://github.com/yuxino/desktop-installer/actions/runs/34704671886) are available in the run artifact.*
 
 - Distinct high-resolution character masters; lossless 656 × 1256, 24-bit sidebars
   filtered to the actual native control size for smooth edges.
