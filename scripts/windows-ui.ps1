@@ -8,8 +8,6 @@ Add-Type -AssemblyName System.Drawing
 Add-Type -TypeDefinition @'
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -72,26 +70,12 @@ public static class InstallerUI {
   }
   public static int CheckState(IntPtr control) { return (int)SendMessage(control, 0xF0, IntPtr.Zero, IntPtr.Zero); }
   public static void Toggle(IntPtr control) { SendMessage(control, 0xF5, IntPtr.Zero, IntPtr.Zero); }
-  public static void Capture(IntPtr window, string path) {
-    RECT frame; if (!GetWindowRect(window, out frame)) throw new Exception("Window bounds unavailable");
-    int width=frame.Right-frame.Left, height=frame.Bottom-frame.Top;
-    if (width < 300 || height < 200 || width > 4000 || height > 3000) throw new Exception("Invalid window size");
+  public static void Render(IntPtr window, IntPtr dc) {
     RedrawWindow(window, IntPtr.Zero, IntPtr.Zero, 0x185);
-    using (var bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb)) {
-      using (var graphics = Graphics.FromImage(bitmap)) {
-        graphics.Clear(Color.Magenta);
-        IntPtr dc=graphics.GetHdc();
-        try { if (!PrintWindow(window, dc, 2)) throw new Exception("PrintWindow failed"); }
-        finally { graphics.ReleaseHdc(dc); }
-      }
-      var colors = new HashSet<int>();
-      for (int y=5; y<height; y+=5) for(int x=5; x<width; x+=5) colors.Add(bitmap.GetPixel(x,y).ToArgb());
-      if(colors.Count < 100) throw new Exception("Blank or incomplete native capture: " + colors.Count + " colors");
-      bitmap.Save(path, ImageFormat.Png);
-    }
+    if (!PrintWindow(window, dc, 2)) throw new Exception("PrintWindow failed");
   }
 }
-'@ -ReferencedAssemblies System.Drawing, System.Drawing.Common, System.Drawing.Primitives, System.Runtime, System.Runtime.InteropServices, System.Collections
+'@
 [InstallerUI]::SetDpi()
 $Dist = (Resolve-Path $Dist).Path
 $null = New-Item -ItemType Directory -Force -Path $Output
@@ -121,7 +105,28 @@ function Wait-Text([IntPtr]$Window, [string]$Text) {
 function Save-Page([IntPtr]$Window, [string]$Name) {
   Start-Sleep -Milliseconds 150
   $controls = [InstallerUI]::Controls($Window)
-  [InstallerUI]::Capture($Window, (Join-Path $Output "$Name.png"))
+  $rect = [InstallerUI+RECT]::new()
+  if (![InstallerUI]::GetWindowRect($Window, [ref]$rect)) { throw 'Window bounds unavailable' }
+  $width = $rect.Right - $rect.Left
+  $height = $rect.Bottom - $rect.Top
+  if ($width -lt 300 -or $height -lt 200 -or $width -gt 4000 -or $height -gt 3000) { throw 'Invalid window size' }
+  # Keep Drawing calls in PowerShell: .NET 10 moved implementation interfaces into
+  # private Windows assemblies which must not become C# compilation dependencies.
+  $bitmap = [System.Drawing.Bitmap]::new($width, $height)
+  try {
+    $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+    try {
+      $graphics.Clear([System.Drawing.Color]::Magenta)
+      $dc = $graphics.GetHdc()
+      try { [InstallerUI]::Render($Window, $dc) } finally { $graphics.ReleaseHdc($dc) }
+    } finally { $graphics.Dispose() }
+    $colors = [System.Collections.Generic.HashSet[int]]::new()
+    for ($y = 5; $y -lt $height; $y += 5) {
+      for ($x = 5; $x -lt $width; $x += 5) { $null = $colors.Add($bitmap.GetPixel($x, $y).ToArgb()) }
+    }
+    if ($colors.Count -lt 100) { throw "Blank or incomplete native capture: $($colors.Count) colors" }
+    $bitmap.Save((Join-Path $Output "$Name.png"), [System.Drawing.Imaging.ImageFormat]::Png)
+  } finally { $bitmap.Dispose() }
   $controls | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $Output "$Name.controls.json") -Encoding utf8
   return $controls
 }
