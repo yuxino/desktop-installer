@@ -1,0 +1,20 @@
+{
+  "en": {
+    "intro": "One installer family. A character of its own for every app.",
+    "product": "Application", "language": "Language", "page": "Page",
+    "welcome": "Welcome", "complete": "Complete", "back": "Back", "next": "Next", "finish": "Finish", "cancel": "Cancel",
+    "note": "Layout preview, not a Windows screenshot. Artwork, copy and positions share the native installer's source. Windows controls the final fonts and display scaling."
+  },
+  "zh-Hans": {
+    "intro": "同一套安装界面，每个应用都有自己的妹妹。",
+    "product": "应用", "language": "语言", "page": "页面",
+    "welcome": "欢迎", "complete": "完成", "back": "上一步", "next": "下一步", "finish": "完成", "cancel": "取消",
+    "note": "这是布局预览，不是 Windows 实机截图。立绘、文案和位置与原生安装界面共用源文件，最终字体和缩放由 Windows 决定。"
+  },
+  "ja": {
+    "intro": "共通のインストーラーに、それぞれのアプリらしいキャラクターを。",
+    "product": "アプリ", "language": "言語", "page": "ページ",
+    "welcome": "ようこそ", "complete": "完了", "back": "戻る", "next": "次へ", "finish": "完了", "cancel": "キャンセル",
+    "note": "レイアウトのプレビューです。Windows の実機画面ではありません。画像・文言・配置はインストーラーと同じソースを使用し、最終的なフォントと表示倍率は Windows に従います。"
+  }
+}

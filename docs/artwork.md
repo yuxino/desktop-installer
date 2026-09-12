@@ -36,8 +36,8 @@ final master hashes are recorded in `assets/provenance.json`.
 ## Packaging
 
 `portrait.png` is the high-resolution master. `sidebar.png` previews the shared
-layout: product name above, the complete portrait fitted without cropping, and
-a small publisher name below. The authoring script exports a true-color BMP,
+layout: the complete half-body portrait fitted without cropping or repeated
+wordmarks. The native caption identifies the application. The authoring script exports a true-color BMP,
 normalizes it to 24-bit bottom-up RGB, and stores it losslessly as
 `sidebar.bmp.br`. `bitmap.json` ties that rendering to its master and checksum.
 

@@ -2,28 +2,31 @@
   "en": {
     "installerCaption": "Install {app}",
     "uninstallerCaption": "Uninstall {app}",
-    "welcomeTitle": "Hello, {app}!",
-    "welcomeText": "Thanks for choosing {app}.\n\n{description}\n\nLet’s get you set up.",
-    "finishTitle": "{app} is ready!",
-    "finishText": "Thanks for installing {app}!\n\n{tip}\n\nEnjoying it? A GitHub Star would make our day.",
-    "starLink": "Visit GitHub / leave a Star"
+    "welcomeTitle": "Welcome to {app}",
+    "welcomeText": "Thanks for choosing {app}.\n\n{description}",
+    "finishTitle": "You're all set!",
+    "finishText": "Thanks for installing {app}.\n\n{tip}",
+    "starLink": "Like {app}? Leave a Star on GitHub",
+    "runText": "Open {app} when I finish"
   },
   "zh-Hans": {
     "installerCaption": "安装 {app}",
     "uninstallerCaption": "卸载 {app}",
-    "welcomeTitle": "你好呀，{app}！",
-    "welcomeText": "谢谢你选择 {app}。\n\n{description}\n\n准备好后，点「下一步」就好。",
-    "finishTitle": "{app} 安装好啦！",
-    "finishText": "感谢安装，接下来请多关照！\n\n{tip}\n\n用得开心的话，欢迎来 GitHub 点个 Star。",
-    "starLink": "去 GitHub 看看 / 点个 Star"
+    "welcomeTitle": "欢迎来到 {app}",
+    "welcomeText": "谢谢你选择 {app}。\n\n{description}",
+    "finishTitle": "安装好啦！",
+    "finishText": "感谢安装 {app}，接下来请多关照！\n\n{tip}",
+    "starLink": "喜欢 {app} 的话，来 GitHub 点个 Star",
+    "runText": "完成后打开 {app}"
   },
   "ja": {
     "installerCaption": "{app} のインストール",
     "uninstallerCaption": "{app} のアンインストール",
-    "welcomeTitle": "こんにちは、{app}！",
-    "welcomeText": "{app} を選んでくれて、ありがとう。\n\n{description}\n\n準備ができたら「次へ」を押してください。",
-    "finishTitle": "{app} の準備ができました！",
-    "finishText": "インストールありがとう！\n\n{tip}\n\n気に入ったら、GitHub の Star で応援してね。",
-    "starLink": "GitHub を見る / Star で応援する"
+    "welcomeTitle": "ようこそ、{app} へ",
+    "welcomeText": "{app} を選んでくれて、ありがとう。\n\n{description}",
+    "finishTitle": "準備ができました！",
+    "finishText": "{app} のインストール、ありがとう！\n\n{tip}",
+    "starLink": "{app} を GitHub の Star で応援する",
+    "runText": "完了後に {app} を開く"
   }
 }

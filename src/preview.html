@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desktop Installer · Preview</title>
+<style>
+  * { box-sizing: border-box }
+  body { margin: 0; background: #f5f5f5; color: #303038; font: 14px/1.55 system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif }
+  main { max-width: 1030px; margin: 48px auto; padding: 0 28px }
+  h1 { font-size: 28px; letter-spacing: -.8px; margin: 0 0 6px; font-weight: 650 }
+  header p { color: #6b6b72; margin: 0 }
+  .controls { display: flex; flex-wrap: wrap; gap: 18px; margin: 28px 0 20px; align-items: center }
+  label { display: flex; gap: 8px; align-items: center }
+  select, button { font: inherit; color: inherit; background: #fff; border: 1px solid #bdbdc3; border-radius: 4px; padding: 5px 10px }
+  button { cursor: pointer }
+  button:disabled { cursor: default; color: #97979d }
+  :is(button, select, a, input):focus-visible { outline: 2px solid #303038; outline-offset: 3px }
+  .surface { overflow-x: auto; padding: 2px 2px 18px }
+  .window { background: white; border: 1px solid #bfbfc3; border-radius: 6px; overflow: hidden }
+  .titlebar { height: 34px; display: flex; align-items: center; padding: 0 14px; font-size: 12px; border-bottom: 1px solid #ededee }
+  .close { margin-left: auto; color: #77777d; font-size: 18px }
+  .body { position: relative }
+  .art { position: absolute; top: 0; left: 0; object-fit: contain }
+  .native { position: absolute; margin: 0 }
+  h2 { font-size: 21px; line-height: 1.28; font-weight: 700; letter-spacing: -.35px; white-space: pre-line }
+  .text { font-size: 13px; line-height: 1.45; white-space: pre-line }
+  .option { font-size: 13px; line-height: 1.3; gap: 8px }
+  .option input { margin: 0; width: 14px; height: 14px; accent-color: #55555c; flex: 0 0 auto }
+  .link { color: #62626a; font-size: 12px; line-height: 1.6; text-underline-offset: 3px; text-decoration-thickness: 1px }
+  .bottom { background: #f6f6f6; border-top: 1px solid #dedee1; height: 55px; padding: 11px 14px; display: flex; gap: 8px; justify-content: flex-end; align-items: center }
+  .bottom button { font-size: 12px; min-width: 83px; padding: 4px 10px; border-radius: 2px }
+  .primary { outline: 1px solid #45454a; outline-offset: -2px }
+  .note { max-width: 660px; color: #797980; font-size: 12px; margin: 0 }
+  .gallery { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 20px; border-top: 1px solid #dcdce0; margin-top: 30px; padding-top: 18px }
+  .gallery button { padding: 0 0 10px; border: 0; border-radius: 0; background: transparent }
+  .gallery img { width: 100%; height: 174px; object-fit: contain; mix-blend-mode: multiply }
+  .gallery button[aria-pressed=true] { border-bottom: 2px solid #3d3d42 }
+  .gallery span { display: block; font-size: 13px; margin-top: 5px }
+  .gallery button:hover { background: #eee }
+  [hidden] { display: none !important }
+  @media(max-width:700px) { main { margin: 26px auto; padding: 0 18px } .gallery { grid-template-columns: repeat(3,1fr) } .gallery img { height: 145px } }
+</style>
+<main>
+  <header><h1>Desktop Installer</h1><p id="intro"></p></header>
+  <div class="controls">
+    <label><span id="productLabel"></span><select id="product"></select></label>
+    <label><span id="languageLabel"></span><select id="language"><option value="en">English</option><option value="zh-Hans">简体中文</option><option value="ja">日本語</option></select></label>
+    <label><span id="pageLabel"></span><select id="page"><option value="welcome"></option><option value="finish"></option></select></label>
+  </div>
+  <div class="surface">
+    <section class="window">
+      <div class="titlebar"><span id="caption"></span><span class="close" aria-hidden="true">×</span></div>
+      <div class="body">
+        <img id="art" class="art" alt="">
+        <h2 id="heading" class="native"></h2>
+        <p id="text" class="text native"></p>
+        <label id="runOption" class="option native"><input type="checkbox" checked><span id="run"></span></label>
+        <label id="shortcutOption" class="option native"><input type="checkbox" checked><span id="shortcut"></span></label>
+        <a id="star" class="link native" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+      <div class="bottom"><button id="back" disabled></button><button id="next" class="primary"></button><button id="cancel" disabled></button></div>
+    </section>
+  </div>
+  <p id="note" class="note"></p>
+  <div class="gallery" id="gallery"></div>
+</main>
+<script>
+  const data = __INSTALLER_DATA__;
+  const $ = id => document.getElementById(id);
+  // NSIS classic dialog units at a readable preview scale. Native uses MapDialogRect.
+  const ux = 1.5 * 1.3, uy = 1.625 * 1.3;
+  const pageLayout = data.layout.page;
+  document.querySelector('.window').style.width = pageLayout.width * ux + 2 + 'px';
+  document.querySelector('.body').style.height = pageLayout.height * uy + 'px';
+  $('art').style.width = pageLayout.sidebarWidth * ux + 'px';
+  $('art').style.height = pageLayout.height * uy + 'px';
+  function position(id, rect) {
+    Object.assign($(id).style, { left: rect.x * ux + 'px', top: rect.y * uy + 'px', width: rect.width * ux + 'px', height: rect.height * uy + 'px' });
+  }
+  for (const [id,key] of Object.entries({heading:'title',runOption:'run',shortcutOption:'shortcut',star:'link'})) position(id,data.layout[key]);
+  for (const p of data.products) {
+    $('product').add(new Option(p.name,p.id));
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.id = p.id;
+    const i = document.createElement('img'); i.src = p.image; i.alt = '';
+    const s = document.createElement('span'); s.textContent = p.name;
+    b.append(i,s); b.onclick = () => { $('product').value = p.id; render() }; $('gallery').append(b);
+  }
+  $('language').value = data.defaultLocale;
+  function render() {
+    const p = data.products.find(p => p.id === $('product').value), locale = $('language').value;
+    const page = $('page').value, done = page === 'finish', m = data.messages[locale], ui = data.ui[locale];
+    const fill = s => s.replace(/\{(\w+)\}/g,(_,k) => ({app:p.name,description:p.description[locale],tip:p.tip[locale]})[k]);
+    document.documentElement.lang = locale;
+    for (const id of ['intro','note']) $(id).textContent = ui[id];
+    for (const id of ['product','language','page']) { $(id+'Label').textContent = ui[id]; $(id).setAttribute('aria-label',ui[id]); }
+    $('page').options[0].textContent = ui.welcome; $('page').options[1].textContent = ui.complete;
+    $('caption').textContent = fill(m.installerCaption); $('heading').textContent = fill(m[page+'Title']); $('text').textContent = fill(m[page+'Text']);
+    position('text', data.layout[done?'finishText':'welcomeText']);
+    $('art').src = p.image; $('art').alt = p.name;
+    for (const id of ['runOption','shortcutOption','star']) $(id).hidden = !done;
+    $('run').textContent = fill(m.runText); $('shortcut').textContent = ui.shortcut;
+    $('star').textContent = fill(m.starLink); $('star').href = p.repository;
+    $('back').textContent = ui.back; $('next').textContent = done ? ui.finish : ui.next; $('cancel').textContent = ui.cancel;
+    document.querySelectorAll('.gallery button').forEach(el => el.setAttribute('aria-pressed',String(el.dataset.id===p.id)));
+  }
+  for (const id of ['product','language','page']) $(id).onchange = render;
+  $('next').onclick = () => { $('page').value = $('page').value === 'welcome' ? 'finish' : 'welcome'; render() };
+  render();
+</script>
+</html>

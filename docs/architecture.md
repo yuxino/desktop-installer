@@ -30,21 +30,38 @@ offline build inputs, not independently authored copies.
 ## Native boundary
 
 Use documented Tauri NSIS `installerHooks`, `sidebarImage`, and
-`customLanguageFiles`. The hook sets only MUI appearance/text. It does not
-define install/uninstall functions, page callbacks, registry writes, or process
-execution. The optional link uses MUI2's native Finish-page link and requires a
+`customLanguageFiles`. The hook sets MUI appearance/text and presentation-only
+SHOW callbacks. It does not define install/uninstall actions, registry writes,
+or process execution. The optional link uses MUI2's native Finish-page link and requires a
 click. Tauri's passive updater path skips interactive pages.
 
 The sidebar is a 656 × 1256 true-color BMP, four times the standard 164 × 314
-asset dimensions. It uses aspect-preserving fit. Product/publisher proper names
-are the only image text; all descriptive text uses native translated controls.
+asset dimensions. It uses aspect-preserving fit. The sidebar contains only the
+character; product identity stays in the native caption, avoiding repeated names.
 No corner header art is supplied, avoiding low-resolution brand tiles.
 
 Native language tables select fonts. All three tables preserve Tauri's current
 27 custom string identifiers and live NSIS variables. Finish text leaves room
-for Tauri's Run checkbox and the optional link. Compile fixtures exercise all
+for Tauri's Run and desktop-shortcut checkboxes and the optional link. Compile fixtures exercise all
 18 product/language combinations; real Windows DPI/layout acceptance remains a
 separate check.
+
+## Layout refinement in 2.1.0
+
+The first HTML preview incorrectly anchored Run at the bottom and omitted
+Tauri's desktop-shortcut checkbox. It also reused the Chinese screenshot in the
+English README. Version 2.1.0 shares `src/layout.json` between native geometry
+and the HTML preview, includes both real checkbox roles, and supplies separate
+English, Chinese, and Japanese screenshots. Preview controls and explanations
+also follow the selected locale.
+
+The hook wraps only MUI2's small welcome/finish entry macros, then calls their
+stock page declarations. It chains any existing SHOW hook, preserves PRE and
+LEAVE hooks, and repositions existing controls with `MapDialogRect` plus
+`SetWindowPos` using dialog units. It does not replace native control handlers,
+checkbox defaults, focus/tab order, launch, shortcut creation, or passive-update
+logic. A required reboot retains the original native layout and radio buttons.
+Compile fixtures exercise PRE/SHOW/LEAVE chaining and both checkbox callbacks.
 
 ## Alternatives
 

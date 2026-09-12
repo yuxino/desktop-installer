@@ -15,12 +15,21 @@ InstallDir "$TEMP\yuxino-installer-preview"
 !include "${__FILEDIR__}\theme.nsh"
 Caption "@APP@ UI preview - no application will be installed"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${__FILEDIR__}\sidebar.bmp"
+!define MUI_PAGE_CUSTOMFUNCTION_PRE PreviewNoop
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW PreviewNoop
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE PreviewNoop
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
-; Match Tauri's Finish-page controls, including the Run checkbox.
+; Match both of Tauri's Finish-page controls. Neither callback changes the system.
+!define MUI_FINISHPAGE_SHOWREADME
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "$(createDesktop)"
+!define MUI_FINISHPAGE_SHOWREADME_FUNCTION PreviewNoop
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_FUNCTION PreviewNoop
+!define MUI_PAGE_CUSTOMFUNCTION_PRE PreviewNoop
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW PreviewNoop
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE PreviewNoop
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "SimpChinese"

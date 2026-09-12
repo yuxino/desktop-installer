@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0 — 2026-09-12
+
+- Refine welcome/finish spacing with shared native and preview geometry.
+- Group Open and desktop-shortcut options, shorten copy, and use one quieter Star link.
+- Remove repeated sidebar wordmarks while preserving all six character masters.
+- Match the full native Finish page in previews, including the shortcut checkbox.
+- Localize the preview controls and provide separate English / Chinese / Japanese screenshots.
+- Preserve native install/update actions, existing page hooks, and reboot layout.
+
 ## 2.0.0 — 2026-09-12
 
 First standalone source repository, replacing the duplicated v1 installer themes.

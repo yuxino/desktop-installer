@@ -14,9 +14,9 @@
 <td align="center"><img src="assets/wnacg/sidebar.png" width="132" alt="WNACG"><br>WNACG</td>
 </tr></table>
 
-上面是安装包实际使用的侧图；对话框布局、字体、按钮和缩放由 Windows 原生界面负责。
+上面是安装包实际使用的侧图。预览与原生安装界面共用位置规则，控件、字体和显示缩放由 Windows 负责。
 
-<img src="docs/preview.zh-Hans.png" width="680" alt="Kiri 简体中文完成页布局预览">
+<img src="docs/preview.zh-Hans.png" width="640" alt="Kiri 简体中文完成页布局预览">
 
 *使用实际素材和文案的布局预览，不是 Windows 实机截图。*
 

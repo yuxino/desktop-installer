@@ -26,7 +26,8 @@ Copy one of `products/*.json` to `products/my-app.json`. Set:
 
 The filename, ID, and directory must match a lowercase slug. The display name
 can contain Unicode, up to 24 characters, excluding NSIS control characters.
-Use a GitHub repository URL. The publisher can be empty. Keep each description
+Use a GitHub repository URL. Publisher metadata can be empty and is not rendered
+over the character. Keep each description
 and tip to one short sentence (maximum 130 characters); verify actual wrapping
 in all languages. Products are discovered from the directory, not hardcoded in
 the compiler. Remove profiles you do not maintain before syncing all products.
@@ -49,7 +50,7 @@ Normal builds on Windows, Linux, and macOS use the checked-in bitmaps.
 
 On any platform you can compose a **656 × 1256** white sidebar in your preferred
 image editor and export matching `assets/my-app/sidebar.png` and a 24-bit BMP.
-Keep only product/publisher proper names as image text, then import the BMP:
+Keep the sidebar free of image text; the native caption identifies your app. Import the BMP:
 
 ```sh
 node scripts/import-bitmap.mjs my-app path/to/sidebar.bmp
@@ -85,10 +86,12 @@ node src-tauri/installer-theme/build.mjs
 followed by your existing frontend build command. If you use an object-form
 command with a custom working directory or an existing custom NSIS template /
 hooks, automatic sync stops. Integrate manually: run the loader before bundling,
-include generated `theme.nsh` before the MUI welcome/finish macros, point
+include generated `theme.nsh` after `MUI2.nsh` and before the MUI welcome/finish macros, point
 `sidebarImage` to `installer-theme/generated/sidebar.bmp`, and configure the
 three generated language tables. Preserve your original hook logic. Combining
-two sets of MUI settings may require resolving duplicate defines.
+two sets of MUI settings may require resolving duplicate defines. The theme wraps
+the welcome/finish entry macros to reposition native controls; existing SHOW
+callbacks are chained, and PRE/LEAVE callbacks remain in the stock declarations.
 
 ## 4. Verify the consumer
 

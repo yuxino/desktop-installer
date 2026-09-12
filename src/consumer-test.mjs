@@ -21,8 +21,11 @@ test('pinned offline bundle matches this application and all three installer lan
     assert.equal((files[`${language}.nsh`].toString().match(/^LangString /gm) || []).length, 27);
   }
   const theme = files['theme.nsh'].toString();
-  assert.equal((theme.match(/^LangString /gm) || []).length, 21);
+  assert.equal((theme.match(/^LangString /gm) || []).length, 24);
   assert.ok(theme.includes(`MUI_FINISHPAGE_LINK_LOCATION "${lock.repository}"`));
-  assert.doesNotMatch(theme, /^(?:Function|Section|Exec|SetFont|!define MUI_PAGE_CUSTOMFUNCTION)/m);
+  assert.doesNotMatch(theme, /^\s*(?:Section|Exec(?:Shell|Wait)?|WriteReg\w+|Delete|RMDir)\b/m);
+  assert.doesNotMatch(theme, /!define MUI_PAGE_CUSTOMFUNCTION_(?:PRE|LEAVE)/);
+  assert.match(theme, /user32::MapDialogRect/);
+  assert.match(theme, /IfRebootFlag yuxino_finish_native/);
   assert.doesNotMatch(theme, /made with care|Small tools, softer days/);
 });

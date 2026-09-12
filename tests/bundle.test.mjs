@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, existsSync, rmSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { brotliCompressSync, brotliDecompressSync } from 'node:zlib';
-import { compileProduct, productIds, readProduct, themeText, languages } from '../src/compiler.mjs';
+import { compileProduct, productIds, readProduct, themeText, languages, layout, root } from '../src/compiler.mjs';
 import { decodeBundle, digest, buildTheme } from '../src/consumer.mjs';
 import { patchConfig, planSync, applyPlan } from '../scripts/sync.mjs';
 import { normalizeBitmap } from '../scripts/prepare-art.mjs';
@@ -35,11 +35,39 @@ test('all products build deterministically with native full-color 4x artwork and
     assert.equal(identifiers[0].length, 27);
     assert.deepEqual(identifiers[0], identifiers[1]); assert.deepEqual(identifiers[0], identifiers[2]);
     const theme = files['theme.nsh'].toString();
-    assert.equal((theme.match(/^LangString /gm) || []).length, 21);
-    assert.doesNotMatch(theme, /^(Function|Section|Exec|SetFont|!define MUI_PAGE_CUSTOMFUNCTION)/m);
+    assert.equal((theme.match(/^LangString /gm) || []).length, 24);
+    assert.doesNotMatch(theme, /^\s*(?:Section|Exec(?:Shell|Wait)?|WriteReg\w+|Delete|RMDir)\b/m);
+    assert.doesNotMatch(theme, /!define MUI_PAGE_CUSTOMFUNCTION_(?:PRE|LEAVE)/);
     assert.ok(theme.includes(`MUI_FINISHPAGE_LINK_LOCATION "${bundle.product.repository}"`));
   }
   assert.equal(fingerprints.size, productIds.length, 'every product must have its own artwork');
+});
+
+test('native layout fits the dialog, separates actions, and preserves MUI behavior', () => {
+  for (const [key,r] of Object.entries(layout)) {
+    if (key === 'page') continue;
+    assert.ok(r.x >= layout.page.sidebarWidth && r.y >= 0 && r.x+r.width <= layout.page.width && r.y+r.height <= layout.page.height);
+  }
+  const ordered = ['title','finishText','run','shortcut','link'].map(key=>layout[key]);
+  for (let i=1;i<ordered.length;i++) assert.ok(ordered[i-1].y+ordered[i-1].height <= ordered[i].y);
+  const bundle = first(), theme = bundle.files['theme.nsh'].toString(), fixture = bundle.files['preview.nsi'].toString();
+  assert.match(theme, /MapDialogRect/); assert.match(theme, /SetWindowPos/);
+  assert.match(theme, /Call "\$\{YUXINO_FINISH_PREVIOUS_SHOW\}"/);
+  assert.match(theme, /IfRebootFlag yuxino_finish_native/);
+  for (const page of ['WELCOME','FINISH']) assert.ok(theme.includes(`!insertmacro MUI_PAGEDECLARATION_${page}`));
+  for (const name of ['RUN','SHOWREADME']) assert.ok(fixture.includes(`MUI_FINISHPAGE_${name}_FUNCTION PreviewNoop`));
+});
+
+test('preview shell translations align and README screenshots match their language', () => {
+  const ui = JSON.parse(readFileSync(join(root, 'locales/preview.json')));
+  assert.deepEqual(Object.keys(ui).sort(), Object.keys(languages).sort());
+  for (const locale of Object.keys(languages)) {
+    assert.deepEqual(Object.keys(ui[locale]).sort(), Object.keys(ui.en).sort());
+    assert.ok(Object.values(ui[locale]).every(s => typeof s === 'string' && s.trim()));
+  }
+  assert.match(readFileSync(join(root, 'README.md'), 'utf8'), /src="docs\/preview\.en\.png"/);
+  assert.doesNotMatch(readFileSync(join(root, 'README.md'), 'utf8'), /src="docs\/preview\.zh-Hans\.png"/);
+  assert.match(readFileSync(join(root, 'README_ZH.md'), 'utf8'), /src="docs\/preview\.zh-Hans\.png"/);
 });
 
 test('tampered or oversized bundles fail before any output is written', t => {

@@ -1,0 +1,9 @@
+{
+  "page": { "width": 326, "height": 193, "sidebarWidth": 109 },
+  "title": { "x": 120, "y": 24, "width": 195, "height": 28 },
+  "welcomeText": { "x": 120, "y": 64, "width": 195, "height": 105 },
+  "finishText": { "x": 120, "y": 64, "width": 195, "height": 42 },
+  "run": { "x": 120, "y": 116, "width": 195, "height": 12 },
+  "shortcut": { "x": 120, "y": 134, "width": 195, "height": 12 },
+  "link": { "x": 120, "y": 164, "width": 195, "height": 12 }
+}

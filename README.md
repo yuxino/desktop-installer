@@ -15,10 +15,10 @@ its own half-body mascot, welcome message, and optional GitHub link.
 <td align="center"><img src="assets/wnacg/sidebar.png" width="132" alt="WNACG"><br>WNACG</td>
 </tr></table>
 
-The images above are the actual sidebar assets. Windows supplies the native
-dialog layout, fonts, buttons, and scaling.
+The images above are the actual sidebar assets. The preview and native installer
+share layout coordinates; Windows supplies the controls, fonts, and DPI scaling.
 
-<img src="docs/preview.zh-Hans.png" width="680" alt="Kiri finish-page layout preview in Simplified Chinese">
+<img src="docs/preview.en.png" width="640" alt="Kiri finish-page layout preview in English">
 
 *Layout preview using the real artwork and copy, not a Windows screenshot.*
 
