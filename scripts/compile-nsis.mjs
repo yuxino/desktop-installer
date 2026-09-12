@@ -19,12 +19,22 @@ export function stageTauriLanguageFiles(directory) {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const compiler = process.env.NSIS_COMPILER || 'makensis';
   const prefix = process.platform === 'win32' ? '/' : '-';
+  const missingIcon = spawnSync(compiler, [`${prefix}V2`,
+    `${prefix}DPREVIEW_OUTPUT=${join(root, 'dist', '.missing-icon-preview.exe')}`, 'preview.nsi'], {
+    cwd: join(root, 'dist', productIds[0]), encoding: 'utf8', maxBuffer: 4 * 1024 * 1024,
+  });
+  if (missingIcon.status === 0 || !`${missingIcon.stderr}\n${missingIcon.stdout}`.includes('PREVIEW_ICON is required')) {
+    console.error(missingIcon.error || 'Preview must reject a missing application icon instead of using the NSIS default');
+    process.exit(1);
+  }
+  console.log('NSIS rejects previews without an explicit application icon');
   for (const id of productIds) {
     const directory = join(root, 'dist', id);
     const languageDirectory = stageTauriLanguageFiles(directory);
     for (const [locale, [, language]] of Object.entries(languages)) {
       const output = join(directory, `preview-${locale}.exe`);
       const result = spawnSync(compiler, [`${prefix}V2`, `${prefix}DPREVIEW_LANGUAGE=${language}`,
+        `${prefix}DPREVIEW_ICON=${join(directory, 'preview.ico')}`,
         `${prefix}DPREVIEW_LANGUAGE_DIR=${languageDirectory}`, `${prefix}DPREVIEW_OUTPUT=${output}`, 'preview.nsi'], {
         cwd: directory, encoding: 'utf8', maxBuffer: 4 * 1024 * 1024,
       });

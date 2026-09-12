@@ -44,3 +44,11 @@ normalizes it to 24-bit bottom-up RGB, and stores it losslessly as
 Welcome, thanks, navigation, errors, and the optional Star link are native
 localized text. They are never flattened into the picture. Source images and
 the authored PNG are included under the repository's MIT license.
+
+## Preview title-bar icons
+
+`assets/<product>/preview.ico` is an unchanged copy of that application's existing
+Windows `installerIcon`. Source repository, source path, size, and SHA-256 are
+recorded in `assets/preview-icons.json`. The build verifies those bytes and copies
+the ICO beside the preview; it is not added to the production presentation bundle.
+Applications continue to own their actual installer icons.

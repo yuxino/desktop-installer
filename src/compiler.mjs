@@ -27,6 +27,17 @@ const nsis = s => s.replaceAll('$', () => '$$').replaceAll('"', '$\\"').replaceA
 const bom = s => Buffer.from('\ufeff' + s, 'utf8');
 const upper = s => s[0].toUpperCase() + s.slice(1);
 
+export function readPreviewIcon(id) {
+  if (!productIds.includes(id)) throw new Error('Unknown product');
+  const manifest = JSON.parse(readFileSync(join(root, 'assets/preview-icons.json')));
+  const entry = manifest.icons?.[id];
+  const bytes = readFileSync(join(root, 'assets', id, 'preview.ico'));
+  if (manifest.format !== 'yuxino-preview-icons-v1' || !entry || bytes.length !== entry.size ||
+      digest(bytes) !== entry.sha256 || bytes.length < 6 || bytes.readUInt32LE(0) !== 0x00010000 ||
+      bytes.readUInt16LE(4) === 0) throw new Error(`Invalid or corrupt preview icon: ${id}`);
+  return bytes;
+}
+
 export function themeText(product) {
   const messages = JSON.parse(readFileSync(join(root, 'locales/messages.json')));
   const keys = ['installerCaption', 'uninstallerCaption', 'welcomeTitle', 'welcomeText', 'finishTitle', 'finishText', 'starLink', 'runText'];

@@ -4,9 +4,9 @@ import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, existsSync, rmSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { brotliCompressSync, brotliDecompressSync } from 'node:zlib';
-import { compileProduct, productIds, readProduct, themeText, languages, layout, root } from '../src/compiler.mjs';
+import { compileProduct, productIds, readProduct, readPreviewIcon, themeText, languages, layout, root } from '../src/compiler.mjs';
 import { decodeBundle, digest, buildTheme } from '../src/consumer.mjs';
-import { patchConfig, planSync, applyPlan } from '../scripts/sync.mjs';
+import { patchConfig, patchPreviewWorkflow, planSync, applyPlan } from '../scripts/sync.mjs';
 import { normalizeBitmap } from '../scripts/prepare-art.mjs';
 import { stageTauriLanguageFiles } from '../scripts/compile-nsis.mjs';
 
@@ -63,6 +63,50 @@ test('native fixtures use Tauri BOM rewriting without hiding malformed custom-la
   writeFileSync(join(folder, 'English.nsh'), Buffer.concat([bom, files['English.nsh']]));
   stageTauriLanguageFiles(folder);
   assert.deepEqual(readFileSync(join(staged, 'English.nsh')).subarray(0, 6), Buffer.concat([bom, bom]));
+});
+
+test('preview icons preserve each application asset and stay outside the production bundle', () => {
+  const manifest = JSON.parse(readFileSync(join(root, 'assets/preview-icons.json')));
+  for (const id of productIds) {
+    const entry = manifest.icons[id], bytes = readPreviewIcon(id);
+    assert.equal(entry.sourceRepository, readProduct(id).repository);
+    assert.match(entry.sourcePath, /^src-tauri\/.+\.ico$/);
+    assert.equal(bytes.length, entry.size);
+    assert.equal(digest(bytes), entry.sha256);
+    const { files } = compileProduct(id);
+    assert.deepEqual(Object.keys(files).sort(), ['English.nsh', 'Japanese.nsh', 'SimpChinese.nsh', 'preview.nsi', 'sidebar.bmp', 'theme.nsh']);
+    const fixture = files['preview.nsi'].toString();
+    assert.match(fixture, /!ifndef PREVIEW_ICON\n!error "PREVIEW_ICON is required/);
+    assert.ok(fixture.includes('!define MUI_ICON "${PREVIEW_ICON}"'));
+    assert.ok(fixture.indexOf('!define MUI_ICON "${PREVIEW_ICON}"') < fixture.indexOf('!include "MUI2.nsh"'));
+  }
+});
+
+test('consumer preview workflow resolves its configured icon before changing directories', () => {
+  const source = `name: Installer theme
+on:
+  push:
+    branches: [feat/yuxino-installer-theme-v1]
+    paths: ['src-tauri/installer-theme/**', 'src-tauri/tauri.windows.conf.json']
+jobs:
+  theme:
+    steps:
+      - run: |
+          Push-Location src-tauri/installer-theme
+          try {
+            & $compiler /V3 preview.nsi
+          } finally { Pop-Location }
+        path: src-tauri/installer-theme/preview-only-setup.exe
+`;
+  const workflow = patchPreviewWorkflow(source);
+  assert.equal(patchPreviewWorkflow(workflow), workflow, 'workflow synchronization is idempotent');
+  assert.match(workflow, /\$iconPath = \$windowsConfig\.bundle\.windows\.nsis\.installerIcon/);
+  assert.match(workflow, /Resolve-Path -LiteralPath \(Join-Path \$tauriDirectory \$iconPath\)/);
+  assert.ok(workflow.indexOf('$previewIcon =') < workflow.indexOf('Push-Location'));
+  assert.ok(workflow.includes('& $compiler /V3 "/DPREVIEW_ICON=$previewIcon" preview.nsi'), 'paths with spaces remain one argument');
+  assert.ok(workflow.includes("'src-tauri/icons/**'"), 'icon changes trigger a fresh preview');
+  assert.doesNotMatch(workflow, /icons\/icon\.ico/);
+  assert.throws(() => patchPreviewWorkflow('custom preview runner'), /Custom preview workflow/);
 });
 
 test('native layout fits the dialog, separates actions, and preserves MUI behavior', () => {

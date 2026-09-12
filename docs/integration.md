@@ -61,6 +61,11 @@ and generates the compressed bitmap and hash metadata. Commit `portrait.png`,
 `sidebar.png`, `sidebar.bmp.br`, and `bitmap.json`. Raw BMP intermediates are
 ignored. Add your source/generation notes to `docs/artwork.md`.
 
+For native previews, copy your existing installer ICO unchanged to
+`assets/my-app/preview.ico`. Add its `sourceRepository`, `sourcePath`, byte `size`,
+and `sha256` under `icons.my-app` in `assets/preview-icons.json`. This is a separate
+preview input; production installers keep `bundle.windows.nsis.installerIcon`.
+
 ## 3. Validate and sync
 
 ```sh
@@ -112,6 +117,11 @@ theme does not implement or change that path.
 Commit the generated loader, test, compressed bundle, lock, config, and small
 README. Do not commit `generated/` or preview executables to the application.
 Application builds never fetch this repository or an image service.
+
+The generated preview workflow reads `installerIcon` from your
+`src-tauri/tauri.windows.conf.json` and passes its absolute path to NSIS as
+`/DPREVIEW_ICON=...`. Manual preview compilation must supply that argument too;
+a missing icon is an error instead of falling back to the default NSIS icon.
 
 ## Updating a family of applications
 

@@ -35,6 +35,33 @@ export function patchConfig(config) {
   return result;
 }
 
+export function patchPreviewWorkflow(source) {
+  let workflow = source.replaceAll('\r\n', '\n')
+    .replace('branches: [feat/yuxino-installer-theme-v1]', 'branches: [main, master]')
+    .replace('Push-Location src-tauri/installer-theme\n', 'Push-Location src-tauri/installer-theme/generated\n')
+    .replace('path: src-tauri/installer-theme/preview-only-setup.exe', 'path: src-tauri/installer-theme/generated/preview-only-setup.exe');
+  if (!workflow.includes('"/DPREVIEW_ICON=$previewIcon"')) {
+    const directory = '          Push-Location src-tauri/installer-theme/generated';
+    const command = '& $compiler /V3 preview.nsi';
+    if (!workflow.includes(directory) || !workflow.includes(command)) {
+      throw new Error('Custom preview workflow detected. Pass the configured installerIcon as PREVIEW_ICON manually.');
+    }
+    const setup = [
+      '          $tauriDirectory = (Resolve-Path -LiteralPath "src-tauri").Path',
+      '          $windowsConfig = Get-Content -LiteralPath (Join-Path $tauriDirectory "tauri.windows.conf.json") -Raw | ConvertFrom-Json',
+      '          $iconPath = $windowsConfig.bundle.windows.nsis.installerIcon',
+      '          if ([string]::IsNullOrWhiteSpace($iconPath)) { throw "Configure installerIcon before compiling the preview" }',
+      '          $previewIcon = (Resolve-Path -LiteralPath (Join-Path $tauriDirectory $iconPath)).Path',
+    ].join('\n');
+    workflow = workflow.replace(directory, () => `${setup}\n${directory}`)
+      .replace(command, () => '& $compiler /V3 "/DPREVIEW_ICON=$previewIcon" preview.nsi');
+  }
+  if (!workflow.includes("'src-tauri/icons/**'")) {
+    workflow = workflow.replaceAll("'src-tauri/installer-theme/**',", "'src-tauri/installer-theme/**', 'src-tauri/icons/**',");
+  }
+  return workflow;
+}
+
 export function planSync(id, projectPath) {
   const bundle = compileProduct(id), folder = join(projectPath, 'src-tauri/installer-theme');
   const configPath = join(projectPath, 'src-tauri/tauri.windows.conf.json');
@@ -61,10 +88,7 @@ export function planSync(id, projectPath) {
   ]);
   const workflowPath = join(projectPath, '.github/workflows/installer-theme.yml');
   if (existsSync(workflowPath)) {
-    const workflow = readFileSync(workflowPath, 'utf8')
-      .replace('branches: [feat/yuxino-installer-theme-v1]', 'branches: [main, master]')
-      .replace('Push-Location src-tauri/installer-theme\n', 'Push-Location src-tauri/installer-theme/generated\n')
-      .replace('path: src-tauri/installer-theme/preview-only-setup.exe', 'path: src-tauri/installer-theme/generated/preview-only-setup.exe');
+    const workflow = patchPreviewWorkflow(readFileSync(workflowPath, 'utf8'));
     files.set(workflowPath, Buffer.from(workflow));
   }
   return { id, files, remove: obsolete.map(p => join(folder, p)).filter(existsSync) };

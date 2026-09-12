@@ -4,6 +4,10 @@ ManifestDPIAware true
 ManifestDPIAwareness PerMonitorV2
 RequestExecutionLevel user
 SetCompressor /SOLID lzma
+!ifndef PREVIEW_ICON
+!error "PREVIEW_ICON is required; use the application's configured installerIcon."
+!endif
+!define MUI_ICON "${PREVIEW_ICON}"
 Name "@APP@ UI preview"
 !ifdef PREVIEW_OUTPUT
 OutFile "${PREVIEW_OUTPUT}"

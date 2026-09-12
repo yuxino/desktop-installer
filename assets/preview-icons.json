@@ -1,0 +1,41 @@
+{
+  "format": "yuxino-preview-icons-v1",
+  "icons": {
+    "kiri": {
+      "sourceRepository": "https://github.com/yuxino/kiri",
+      "sourcePath": "src-tauri/icons/icon.ico",
+      "size": 75793,
+      "sha256": "99c0f61326a105c888426fdfc7af112f4d7f363e10092993c5e55dfeba700ae3"
+    },
+    "mimi": {
+      "sourceRepository": "https://github.com/yuxino/mimi",
+      "sourcePath": "src-tauri/icons/icon.ico",
+      "size": 71081,
+      "sha256": "386120c0b94f014defb05fe3ab934e870f36af099e2d7a6e51a2f73d268f3ee3"
+    },
+    "satori": {
+      "sourceRepository": "https://github.com/yuxino/satori",
+      "sourcePath": "src-tauri/icons/icon.ico",
+      "size": 141306,
+      "sha256": "2b5718c90a2ce73ddd788a84cb6c2bfe2b2bafe75fa49795ec5fb822afe47332"
+    },
+    "tick": {
+      "sourceRepository": "https://github.com/yuxino/tick",
+      "sourcePath": "src-tauri/icons/icon.ico",
+      "size": 109405,
+      "sha256": "6b21c6fa32319da25489b06f5cb204a0f6a31ff0dd88403091b7dff716c701a5"
+    },
+    "viva": {
+      "sourceRepository": "https://github.com/yuxino/viva",
+      "sourcePath": "src-tauri/icons/icon.ico",
+      "size": 103905,
+      "sha256": "50a490bda20cc62f2f1d9d0d10928b65dc6ec339eab3026187901a22ed99e69b"
+    },
+    "wnacg": {
+      "sourceRepository": "https://github.com/yuxino/wnacg",
+      "sourcePath": "src-tauri/icons/kiri/icon.ico",
+      "size": 85760,
+      "sha256": "373dfa1ffeda0845c325e6bddc0d404975b1a93f89040bafe70c83f943393a43"
+    }
+  }
+}

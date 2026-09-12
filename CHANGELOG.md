@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.2 — 2026-09-13
+
+- Use each application's existing character ICO for native preview executables and title bars.
+- Require an explicit preview icon, verify copied asset hashes, and keep the six-file production bundle unchanged.
+- Resolve consumer preview icons from the app's own Windows installer configuration.
+
 ## 2.1.1 — 2026-09-13
 
 - Emit BOM-free custom language files for Tauri, which adds its own UTF-8 BOM; compile native fixtures through that same rewrite to catch packaging regressions.
