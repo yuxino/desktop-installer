@@ -9,7 +9,6 @@ its own half-body mascot, welcome message, and optional GitHub link.
 <table><tr>
 <td align="center"><img src="assets/kiri/sidebar.png" width="132" alt="Kiri"><br>Kiri</td>
 <td align="center"><img src="assets/mimi/sidebar.png" width="132" alt="Mimi"><br>Mimi</td>
-<td align="center"><img src="assets/satori/sidebar.png" width="132" alt="Satori"><br>Satori</td>
 <td align="center"><img src="assets/viva/sidebar.png" width="132" alt="Viva"><br>Viva</td>
 <td align="center"><img src="assets/tick/sidebar.png" width="132" alt="Tick"><br>Tick</td>
 </tr></table>
@@ -47,7 +46,7 @@ pages. This is a layout preview, not a Windows screenshot.
 
 With NSIS 3.11 on PATH, `npm run test:nsis` compiles a harmless preview executable
 for each product/language. These previews install and launch no application.
-Windows CI also opens all 15 native previews, checks Next/Back/Finish and the Run
+Windows CI also opens all 12 native previews, checks Next/Back/Finish and the Run
 checkbox, and captures the welcome, directory, and finish pages. Download the
 `installer-previews-and-bundles` Actions artifact and open `windows-ui/` for PNGs,
 `index.html`, control bounds/text, and `results.json` (including actual DPI and executable hashes).
@@ -65,7 +64,7 @@ node scripts/sync.mjs --project ../my-app --product my-app
 
 The [integration guide](docs/integration.md) covers profiles, artwork, an existing
 custom installer, build commands, and updating the bundle. It works with your
-own app name, publisher, and GitHub repository; the five included profiles are examples.
+own app name, publisher, and GitHub repository; the four included profiles are examples.
 
 For all registered apps under one parent directory:
 
