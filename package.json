@@ -1,6 +1,6 @@
 {
   "name": "@yuxino/desktop-installer",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,5 +11,7 @@
     "test:nsis": "node scripts/compile-nsis.mjs",
     "art": "node scripts/prepare-art.mjs"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }

@@ -11,5 +11,5 @@ for (const id of productIds) {
   writeFileSync(join(folder, 'preview.ico'), readPreviewIcon(id));
   writeFileSync(join(folder, 'theme.bundle.br'), compressed);
   writeFileSync(join(folder, 'theme.lock.json'), JSON.stringify(lock, null, 2) + '\n');
-  console.log(`${id}: 4x artwork, 3 languages, ${Math.round(compressed.length / 1024)} KiB offline bundle`);
+  console.log(`${id}: 4x artwork, 7 languages, ${Math.round(compressed.length / 1024)} KiB offline bundle`);
 }

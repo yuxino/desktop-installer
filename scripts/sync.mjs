@@ -21,7 +21,7 @@ export function patchConfig(config) {
   }
   nsis.installerHooks = generated + 'theme.nsh'; nsis.sidebarImage = generated + 'sidebar.bmp';
   delete nsis.headerImage; delete nsis.uninstallerHeaderImage;
-  nsis.languages = ['English', 'SimpChinese', 'Japanese']; nsis.displayLanguageSelector = false;
+  nsis.languages = ['English', 'SimpChinese', 'TradChinese', 'Japanese', 'German', 'Korean', 'French']; nsis.displayLanguageSelector = false;
   nsis.customLanguageFiles = Object.fromEntries(nsis.languages.map(l => [l, generated + l + '.nsh']));
   // Preserve string commands; custom cwd/wait object commands require manual integration.
   if (result.build?.beforeBuildCommand) {
@@ -83,7 +83,7 @@ export function planSync(id, projectPath) {
     [join(folder, 'theme.lock.json'), Buffer.from(JSON.stringify(bundle.lock, null, 2) + '\n')],
     [join(folder, '.gitignore'), Buffer.from('/generated/\n/artwork/\n/.cache/\n*.exe\n*.tmp\n')],
     [join(folder, '.gitattributes'), Buffer.from('* text=auto eol=lf\n*.br binary\n*.bmp binary\n')],
-    [join(folder, 'README.md'), Buffer.from(`# ${bundle.product.name} installer\n\nPresentation source: [yuxino/desktop-installer](https://github.com/yuxino/desktop-installer).\nPinned version: **${bundle.lock.version}**. This directory is generated; edit the shared repository.\n\nBuild offline from the application root:\n\n\x60\x60\x60sh\nnode src-tauri/installer-theme/build.mjs\nnode --test src-tauri/installer-theme/theme.node.mjs\nnode src-tauri/installer-theme/build.mjs --check\n\x60\x60\x60\n\nThe Windows config uses native Tauri/NSIS installation and update behavior, a lossless\n4x full-color half-body sidebar, and English / Simplified Chinese / Japanese dialogs.\nThe optional GitHub link opens only when clicked on Finish.\n\nUpdate all consumers from the shared repository:\n\n\x60\x60\x60sh\nnpm run sync -- --root <parent-of-application-repositories>\n\x60\x60\x60\n\nCommit the resulting bundle and lock together. Old releases keep their pinned artwork.\nNo network, Swift, image service, or package install is needed to unpack this bundle.\n`)],
+    [join(folder, 'README.md'), Buffer.from(`# ${bundle.product.name} installer\n\nPresentation source: [yuxino/desktop-installer](https://github.com/yuxino/desktop-installer).\nPinned version: **${bundle.lock.version}**. This directory is generated; edit the shared repository.\n\nBuild offline from the application root:\n\n\x60\x60\x60sh\nnode src-tauri/installer-theme/build.mjs\nnode --test src-tauri/installer-theme/theme.node.mjs\nnode src-tauri/installer-theme/build.mjs --check\n\x60\x60\x60\n\nThe Windows config uses native Tauri/NSIS installation and update behavior, a lossless\n4x full-color half-body sidebar, and English / Simplified Chinese / Traditional Chinese / Japanese / German / Korean / French dialogs.\nThe optional GitHub link opens only when clicked on Finish.\n\nUpdate all consumers from the shared repository:\n\n\x60\x60\x60sh\nnpm run sync -- --root <parent-of-application-repositories>\n\x60\x60\x60\n\nCommit the resulting bundle and lock together. Old releases keep their pinned artwork.\nNo network, Swift, image service, or package install is needed to unpack this bundle.\n`)],
     [configPath, Buffer.from(JSON.stringify(config, null, 2) + '\n')],
   ]);
   const workflowPath = join(projectPath, '.github/workflows/installer-theme.yml');

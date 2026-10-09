@@ -6,12 +6,20 @@
   "description": {
     "en": "Capture screenshots, recognize text and record your screen.",
     "zh-Hans": "截图、识字、录屏，把想留住的瞬间收好。",
-    "ja": "スクリーンショット、文字認識、画面録画をひとつに。"
+    "ja": "スクリーンショット、文字認識、画面録画をひとつに。",
+    "zh-Hant": "截圖、文字辨識與螢幕錄影。",
+    "de": "Screenshots aufnehmen, Text erkennen und den Bildschirm aufzeichnen.",
+    "ko": "스크린샷, 문자 인식과 화면 녹화.",
+    "fr": "Capturez l’écran, reconnaissez du texte et enregistrez des vidéos."
   },
   "tip": {
     "en": "Press Shift+Ctrl+A for your first capture.",
     "zh-Hans": "按 Shift+Ctrl+A，试着截下第一张图吧。",
-    "ja": "Shift+Ctrl+A で最初の一枚を撮ってみましょう。"
+    "ja": "Shift+Ctrl+A で最初の一枚を撮ってみましょう。",
+    "zh-Hant": "按 Shift+Ctrl+A 開始第一次擷取。",
+    "de": "Drücken Sie Shift+Ctrl+A für Ihre erste Aufnahme.",
+    "ko": "Shift+Ctrl+A로 첫 캡처를 시작하세요.",
+    "fr": "Appuyez sur Shift+Ctrl+A pour votre première capture."
   },
   "publisher": "yuxino"
 }

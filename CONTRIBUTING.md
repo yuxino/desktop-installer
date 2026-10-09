@@ -22,7 +22,7 @@ compressed 24-bit BMP, metadata, and generation/source notes. Do not flatten
 translated welcome or thanks text into images. Do not add suggestive character
 art, third-party characters without permission, or unnecessary decorative text.
 
-For copy changes, keep English, Simplified Chinese, and Japanese in sync. Preserve
+For copy changes, keep English, Simplified Chinese, Traditional Chinese, Japanese, German, Korean, and French in sync. Preserve
 all NSIS runtime variables. Keep Finish copy short enough for the Run checkbox
 and optional link; check all three languages at 100%, 150%, and 200% on Windows.
 Record which checks were actually performed. A browser preview is not native QA.

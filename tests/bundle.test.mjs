@@ -34,10 +34,10 @@ test('all products build deterministically with native full-color 4x artwork and
       for (const placeholder of ['${PRODUCTNAME}', '${VERSION}', '$R4', '$0', '$1']) assert.ok(text.includes(placeholder), `${id} ${name}: ${placeholder}`);
     }
     assert.equal(identifiers[0].length, 27);
-    assert.deepEqual(identifiers[0], identifiers[1]); assert.deepEqual(identifiers[0], identifiers[2]);
+    for (const identifierSet of identifiers.slice(1)) assert.deepEqual(identifiers[0], identifierSet);
     const theme = files['theme.nsh'].toString();
     assert.equal(theme.charCodeAt(0), 0xfeff, 'directly included theme keeps its UTF-8 BOM');
-    assert.equal((theme.match(/^LangString /gm) || []).length, 24);
+    assert.equal((theme.match(/^LangString /gm) || []).length, 56);
     assert.doesNotMatch(theme, /^\s*(?:Section|Exec(?:Shell|Wait)?|WriteReg\w+|Delete|RMDir)\b/m);
     assert.doesNotMatch(theme, /!define MUI_PAGE_CUSTOMFUNCTION_(?:PRE|LEAVE)/);
     assert.ok(theme.includes(`MUI_FINISHPAGE_LINK_LOCATION "${bundle.product.repository}"`));
@@ -74,7 +74,7 @@ test('preview icons preserve each application asset and stay outside the product
     assert.equal(bytes.length, entry.size);
     assert.equal(digest(bytes), entry.sha256);
     const { files } = compileProduct(id);
-    assert.deepEqual(Object.keys(files).sort(), ['English.nsh', 'Japanese.nsh', 'SimpChinese.nsh', 'preview.nsi', 'sidebar.bmp', 'theme.nsh']);
+    assert.deepEqual(Object.keys(files).sort(), ['English.nsh', 'French.nsh', 'German.nsh', 'Japanese.nsh', 'Korean.nsh', 'SimpChinese.nsh', 'TradChinese.nsh', 'preview.nsi', 'sidebar.bmp', 'theme.nsh']);
     const fixture = files['preview.nsi'].toString();
     assert.match(fixture, /!ifndef PREVIEW_ICON\n!error "PREVIEW_ICON is required/);
     assert.ok(fixture.includes('!define MUI_ICON "${PREVIEW_ICON}"'));
@@ -210,4 +210,31 @@ test('bitmap normalization handles top-down images without losing full color', (
   const bmp = normalizeBitmap(source, 1, 2);
   assert.deepEqual([...bmp.subarray(54)], [4, 5, 6, 0, 1, 2, 3, 0]);
   assert.throws(() => normalizeBitmap(source), /Unexpected/);
+});
+
+test('every installer language preserves each live Tauri message placeholder', () => {
+  const parse = name => Object.fromEntries([...readFileSync(join(root, 'locales', `${name}.nsh`), 'utf8')
+    .matchAll(/^LangString (\w+) \$\{LANG_\w+\} "(.*)"$/gm)]
+    .map(match => [match[1], match[2]]));
+  const english = parse('English');
+  const tokens = text => (text.match(/\$\{(?:PRODUCTNAME|VERSION)\}|\$R4|\$[01]/g) ?? []).sort();
+  assert.equal(Object.keys(english).length, 27);
+  for (const [name] of Object.values(languages)) {
+    const translated = parse(name);
+    assert.deepEqual(Object.keys(translated).sort(), Object.keys(english).sort(), name);
+    for (const key of Object.keys(english)) {
+      assert.ok(translated[key].trim(), `${name}: ${key}`);
+      assert.deepEqual(tokens(translated[key]), tokens(english[key]), `${name}: ${key}`);
+      // Brand mentions may repeat less often after translation, but must not
+      // disappear. Runtime variables above must preserve exact multiplicity.
+      if (english[key].includes('@APP@')) assert.ok(translated[key].includes('@APP@'), `${name}: ${key} app name`);
+    }
+  }
+  const messages = JSON.parse(readFileSync(join(root, 'locales/messages.json')));
+  for (const locale of Object.keys(languages)) {
+    for (const key of Object.keys(messages.en)) {
+      assert.deepEqual((messages[locale][key].match(/\{\w+\}/g) ?? []).sort(),
+        (messages.en[key].match(/\{\w+\}/g) ?? []).sort(), `${locale}: ${key}`);
+    }
+  }
 });

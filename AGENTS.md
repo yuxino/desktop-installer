@@ -4,7 +4,7 @@ This is the only authoring source for the Windows installer family. Change templ
 translations, product profiles, and character masters here; consumer bundles are generated.
 
 - Keep each product's existing identity and its own approved half-body character.
-- Keep English, Simplified Chinese, and Japanese key sets and placeholders aligned.
+- Keep English, Simplified Chinese, Traditional Chinese, Japanese, German, Korean, and French key sets and placeholders aligned.
 - Keep Tauri's install, update, downgrade, shortcut, WebView2, and uninstall logic intact.
 - The GitHub/Star link is optional and opens only when explicitly clicked on Finish.
 - Do not add networking, telemetry, extra software, or automatic browser opening.

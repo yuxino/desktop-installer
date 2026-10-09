@@ -28,5 +28,45 @@
     "finishText": "{app} のインストール、ありがとう！\n\n{tip}",
     "starLink": "{app} を GitHub の Star で応援する",
     "runText": "完了後に {app} を開く"
+  },
+  "zh-Hant": {
+    "installerCaption": "安裝 {app}",
+    "uninstallerCaption": "解除安裝 {app}",
+    "welcomeTitle": "歡迎使用 {app}",
+    "welcomeText": "感謝你選擇 {app}。\n\n{description}",
+    "finishTitle": "安裝完成！",
+    "finishText": "感謝安裝 {app}。\n\n{tip}",
+    "starLink": "喜歡 {app}？在 GitHub 點個 Star",
+    "runText": "完成後開啟 {app}"
+  },
+  "de": {
+    "installerCaption": "{app} installieren",
+    "uninstallerCaption": "{app} deinstallieren",
+    "welcomeTitle": "Willkommen bei {app}",
+    "welcomeText": "Danke, dass Sie {app} gewählt haben.\n\n{description}",
+    "finishTitle": "Die Installation ist fertig!",
+    "finishText": "Danke für die Installation von {app}.\n\n{tip}",
+    "starLink": "Gefällt Ihnen {app}? Ein Star auf GitHub",
+    "runText": "{app} nach Abschluss öffnen"
+  },
+  "ko": {
+    "installerCaption": "{app} 설치",
+    "uninstallerCaption": "{app} 제거",
+    "welcomeTitle": "{app}에 오신 것을 환영합니다",
+    "welcomeText": "{app}을(를) 선택해 주셔서 감사합니다.\n\n{description}",
+    "finishTitle": "설치가 완료되었습니다!",
+    "finishText": "{app}을(를) 설치해 주셔서 감사합니다.\n\n{tip}",
+    "starLink": "{app}이(가) 마음에 드시나요? GitHub에서 Star 남기기",
+    "runText": "완료 후 {app} 열기"
+  },
+  "fr": {
+    "installerCaption": "Installer {app}",
+    "uninstallerCaption": "Désinstaller {app}",
+    "welcomeTitle": "Bienvenue dans {app}",
+    "welcomeText": "Merci d’avoir choisi {app}.\n\n{description}",
+    "finishTitle": "L’installation est terminée !",
+    "finishText": "Merci d’avoir installé {app}.\n\n{tip}",
+    "starLink": "Vous aimez {app} ? Une Star sur GitHub",
+    "runText": "Ouvrir {app} à la fin"
   }
 }

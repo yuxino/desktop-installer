@@ -1,7 +1,7 @@
 # Desktop Installer
 
 适用于 **Tauri 2 + NSIS** 的 Windows 安装界面主题，统一维护布局、文案和角色素材。
-内置 Kiri、Mimi、Viva、Tick 四套配置，支持简体中文、英语和日语。
+内置 Kiri、Mimi、Viva、Tick 四套配置，支持英语、简体中文、繁体中文、日语、德语、韩语和法语。
 
 <img src="docs/preview.zh-Hans.png" width="640" alt="Kiri 中文 Windows 安装完成页">
 

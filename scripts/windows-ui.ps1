@@ -88,7 +88,7 @@ $fonts = [System.Drawing.Text.InstalledFontCollection]::new()
 try {
   @{ os=[Environment]::OSVersion.VersionString; powerShell=$PSVersionTable.PSVersion.ToString();
      source=$env:GITHUB_SHA; run=$env:GITHUB_RUN_ID; culture=(Get-Culture).Name;
-     uiFonts=@($fonts.Families.Name | Where-Object { $_ -in @('Segoe UI', 'Microsoft YaHei UI', 'Yu Gothic UI') })
+     uiFonts=@($fonts.Families.Name | Where-Object { $_ -in @('Segoe UI', 'Microsoft YaHei UI', 'Microsoft JhengHei UI', 'Yu Gothic UI', 'Malgun Gothic') })
   } | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $Output 'environment.json') -Encoding utf8
 } finally { $fonts.Dispose() }
 
@@ -165,7 +165,7 @@ function Save-Page([IntPtr]$Window, [string]$Name, [string]$BitmapReport = '') {
 
 foreach ($profile in Get-ChildItem (Join-Path $PSScriptRoot '../products') -Filter '*.json' | Sort-Object Name) {
   $product = Get-Content $profile.FullName -Raw | ConvertFrom-Json
-  foreach ($locale in @('en', 'zh-Hans', 'ja')) {
+  foreach ($locale in @('en', 'zh-Hans', 'zh-Hant', 'ja', 'de', 'ko', 'fr')) {
     $name = "$($product.id)-$locale"
     $process = $null
     $window = [IntPtr]::Zero

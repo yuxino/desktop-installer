@@ -4,7 +4,7 @@ import { productIds, readProduct } from '../src/compiler.mjs';
 
 const directory = resolve(process.argv[2] || 'dist/windows-ui');
 const records = JSON.parse(readFileSync(join(directory, 'results.json'), 'utf8').replace(/^\uFEFF/, ''));
-const locales = ['en', 'zh-Hans', 'ja'];
+const locales = ['en', 'zh-Hans', 'zh-Hant', 'ja', 'de', 'ko', 'fr'];
 const pages = ['welcome', 'directory', 'finish'];
 const captures = {};
 for (const product of productIds) {
@@ -32,7 +32,7 @@ const html = `<!doctype html>
 <main><h1>Windows 安装界面</h1>
 <p>以下均来自 Windows CI 中实际运行的 NSIS 窗口。${products.length} 个项目、${locales.length} 种语言，已检查前进、返回、完成和运行复选框。</p>
 <p>这些程序使用项目实际安装主题，安装内容为空；截图验证界面与操作，不代替真实应用的安装、升级、权限和多显示器测试。</p>
-<nav><label>语言 <select id="locale"><option value="zh-Hans">简体中文</option><option value="en">English</option><option value="ja">日本語</option></select></label><label>页面 <select id="page"><option value="finish">安装完成</option><option value="welcome">欢迎安装</option><option value="directory">安装位置</option></select></label>${workflow ? `<a href="${workflow}" target="_blank" rel="noreferrer">查看 CI 记录</a>` : ''}</nav>
+<nav><label>语言 <select id="locale"><option value="en">English</option><option value="zh-Hans">简体中文</option><option value="zh-Hant">繁體中文</option><option value="ja">日本語</option><option value="de">Deutsch</option><option value="ko">한국어</option><option value="fr">Français</option></select></label><label>页面 <select id="page"><option value="finish">安装完成</option><option value="welcome">欢迎安装</option><option value="directory">安装位置</option></select></label>${workflow ? `<a href="${workflow}" target="_blank" rel="noreferrer">查看 CI 记录</a>` : ''}</nav>
 <div id="gallery"></div><footer>保留 PNG 原始像素；点击图片查看原始尺寸。下载进度、安装和重新启动属于各应用的更新功能。</footer></main><dialog id="zoom"><button id="close-zoom" type="button">关闭</button><img id="zoom-image" alt=""></dialog>
 <script type="application/json" id="data">${data}</script>
 <script>
@@ -40,7 +40,7 @@ const data=JSON.parse(document.getElementById('data').textContent);
 const locale=document.getElementById('locale'),page=document.getElementById('page'),gallery=document.getElementById('gallery');
 const zoom=document.getElementById('zoom'),zoomImage=document.getElementById('zoom-image');document.getElementById('close-zoom').addEventListener('click',()=>zoom.close());
 const query=new URLSearchParams(location.search);
-if(['en','zh-Hans','ja'].includes(query.get('locale')))locale.value=query.get('locale');
+if(['en','zh-Hans','zh-Hant','ja','de','ko','fr'].includes(query.get('locale')))locale.value=query.get('locale');
 if(['welcome','directory','finish'].includes(query.get('page')))page.value=query.get('page');
 function render(){gallery.replaceChildren();for(const product of data.products){const figure=document.createElement('figure'),caption=document.createElement('figcaption'),heading=document.createElement('h2'),meta=document.createElement('span'),link=document.createElement('a'),image=document.createElement('img');heading.textContent=product.name;meta.className='meta';meta.textContent=locale.selectedOptions[0].textContent+' · '+data.records.find(r=>r.product===product.id&&r.locale===locale.value).dpi+' DPI';image.src=data.captures[product.id+'-'+locale.value+'-'+page.value];image.alt=product.name+' '+locale.selectedOptions[0].textContent+' '+page.selectedOptions[0].textContent+' Windows 原生截图';link.href='#zoom';link.addEventListener('click',event=>{event.preventDefault();zoomImage.src=image.src;zoomImage.alt=image.alt;zoom.showModal()});link.append(image);caption.append(heading,meta);figure.append(caption,link);gallery.append(figure)}}locale.addEventListener('change',render);page.addEventListener('change',render);render();
 </script></html>`;

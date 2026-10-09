@@ -6,12 +6,20 @@
   "description": {
     "en": "Live translated subtitles for the audio playing on your computer.",
     "zh-Hans": "给电脑里正在播放的声音，配上看得懂的字幕。",
-    "ja": "パソコンで再生中の音声に、翻訳字幕を添えます。"
+    "ja": "パソコンで再生中の音声に、翻訳字幕を添えます。",
+    "zh-Hant": "為電腦播放中的音訊顯示即時翻譯字幕。",
+    "de": "Live-Übersetzungsuntertitel für die Audiowiedergabe auf Ihrem Computer.",
+    "ko": "컴퓨터에서 재생되는 소리에 실시간 번역 자막을 표시합니다.",
+    "fr": "Des sous-titres traduits en direct pour l’audio lu sur votre ordinateur."
   },
   "tip": {
     "en": "Open settings to configure a service and choose your subtitle languages.",
     "zh-Hans": "先到设置里配好服务，选好字幕语言吧。",
-    "ja": "設定でサービスの接続と字幕の言語を準備しましょう。"
+    "ja": "設定でサービスの接続と字幕の言語を準備しましょう。",
+    "zh-Hant": "開啟設定以準備服務，並選擇字幕語言。",
+    "de": "Öffnen Sie die Einstellungen, richten Sie einen Dienst ein und wählen Sie die Untertitelsprachen.",
+    "ko": "설정을 열어 서비스를 구성하고 자막 언어를 선택하세요.",
+    "fr": "Ouvrez les réglages pour configurer un service et choisir les langues des sous-titres."
   },
   "publisher": "yuxino"
 }
