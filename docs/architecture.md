@@ -42,9 +42,9 @@ No corner header art is supplied, avoiding low-resolution brand tiles.
 
 Native language tables select fonts. All three tables preserve Tauri's current
 27 custom string identifiers and live NSIS variables. Finish text leaves room
-for Tauri's Run and desktop-shortcut checkboxes and the optional link. Compile fixtures exercise all
-18 product/language combinations; real Windows DPI/layout acceptance remains a
-separate check.
+for Tauri's Run and desktop-shortcut checkboxes and the optional link. Compile
+fixtures exercise every registered product in all three languages; real Windows
+DPI/layout acceptance remains a separate check.
 
 Custom language files are emitted as UTF-8 without a byte-order mark: Tauri's
 bundler always prepends its own UTF-8 BOM before including them. Supplying a

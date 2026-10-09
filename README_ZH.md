@@ -8,7 +8,6 @@
 <table><tr>
 <td align="center"><img src="assets/kiri/sidebar.png" width="132" alt="Kiri"><br>Kiri</td>
 <td align="center"><img src="assets/mimi/sidebar.png" width="132" alt="Mimi"><br>Mimi</td>
-<td align="center"><img src="assets/satori/sidebar.png" width="132" alt="Satori"><br>Satori</td>
 <td align="center"><img src="assets/viva/sidebar.png" width="132" alt="Viva"><br>Viva</td>
 <td align="center"><img src="assets/tick/sidebar.png" width="132" alt="Tick"><br>Tick</td>
 </tr></table>
@@ -44,7 +43,7 @@ npm run preview
 这是布局预览，不是 Windows 实机截图。
 
 如果 PATH 中有 NSIS 3.11，运行 `npm run test:nsis` 可编译每个应用、每种语言的
-预览程序；预览程序不会安装或启动真实应用。Windows CI 会实际打开全部 15 个原生预览，
+预览程序；预览程序不会安装或启动真实应用。Windows CI 会实际打开全部 12 个原生预览，
 检查下一步、上一步、完成和运行复选框，并截取欢迎、目录、完成页。
 下载 Actions 的 `installer-previews-and-bundles` 产物，在 `windows-ui/` 中查看 `index.html` 图集、PNG、
 控件位置与文字，以及包含实际 DPI 和程序哈希的 `results.json`。
@@ -59,7 +58,7 @@ node scripts/sync.mjs --project ../my-app --product my-app
 ```
 
 [接入说明](docs/integration.md) 包含资料格式、立绘处理、自定义安装器、构建命令和升级方式。
-名称、发布者和 GitHub 地址都可以替换，内置的五个应用是可参考的实例。
+名称、发布者和 GitHub 地址都可以替换，内置的四个应用是可参考的实例。
 
 如果所有已登记应用都在同一个目录下：
 

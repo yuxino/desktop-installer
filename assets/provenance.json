@@ -27,18 +27,6 @@
         }
       ]
     },
-    "satori": {
-      "master": "assets/satori/portrait.png",
-      "width": 1024,
-      "height": 1536,
-      "sha256": "5c5c6a2fe555b6584a37f294e40577c69cfcd43e19e6c95118174bbeb7e56d28",
-      "generations": [
-        {
-          "reference": "satori-web/public/satori-portrait.png",
-          "prompt": "Use case: stylized-concept. Create a premium production character illustration for a Windows installer sidebar. Use attached image solely as exact identity reference, redraw as a clean separate HALF-BODY portrait from complete hair or hood to waist, never full body. Satori: preserve the silver-gray bob, soft purple eyes, ivory cat-ear hood and tiny brass bookmark clasp from the reference. A cozy bookish girl holding one closed cream hardback at chest level with both hands, slight thoughtful smile. Ivory hooded cape over a modest warm-gray long-sleeved outfit. The hood and cat ears are complete in frame. Wholesome petite cute chibi anime girl with youthful rounded face, non-sexual everyday presentation, large luminous eyes, modest long sleeves. Detailed refined anime linework and soft cel shading, crisp high-definition facial features, natural warmth. Centered narrow portrait approx 1024x1536; keep all hair, hands and small prop fully inside canvas, 6% side margins. Pure uniform white #FFFFFF background; no scene, frame, caption, watermark, floating symbols or additional people. Character takes about 88% of height. Waist is the lower crop. Harmonious series style like a high-quality Japanese software mascot."
-        }
-      ]
-    },
     "viva": {
       "master": "assets/viva/portrait.png",
       "width": 1024,
