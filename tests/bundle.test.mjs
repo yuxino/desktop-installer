@@ -217,7 +217,7 @@ test('every installer language preserves each live Tauri message placeholder', (
     .matchAll(/^LangString (\w+) \$\{LANG_\w+\} "(.*)"$/gm)]
     .map(match => [match[1], match[2]]));
   const english = parse('English');
-  const tokens = text => (text.match(/\$\{(?:PRODUCTNAME|VERSION)\}|\$R4|\$[01]|@APP@/g) ?? []).sort();
+  const tokens = text => (text.match(/\$\{(?:PRODUCTNAME|VERSION)\}|\$R4|\$[01]/g) ?? []).sort();
   assert.equal(Object.keys(english).length, 27);
   for (const [name] of Object.values(languages)) {
     const translated = parse(name);
@@ -225,6 +225,9 @@ test('every installer language preserves each live Tauri message placeholder', (
     for (const key of Object.keys(english)) {
       assert.ok(translated[key].trim(), `${name}: ${key}`);
       assert.deepEqual(tokens(translated[key]), tokens(english[key]), `${name}: ${key}`);
+      // Brand mentions may repeat less often after translation, but must not
+      // disappear. Runtime variables above must preserve exact multiplicity.
+      if (english[key].includes('@APP@')) assert.ok(translated[key].includes('@APP@'), `${name}: ${key} app name`);
     }
   }
   const messages = JSON.parse(readFileSync(join(root, 'locales/messages.json')));
