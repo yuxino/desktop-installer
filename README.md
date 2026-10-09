@@ -1,94 +1,48 @@
 # Desktop Installer
 
-[简体中文](README_ZH.md)
+适用于 **Tauri 2 + NSIS** 的 Windows 安装界面主题，统一维护布局、文案和角色素材。
+内置 Kiri、Mimi、Viva、Tick 四套配置，支持简体中文、英语和日语。
 
-A shared, character-led Windows installer theme for **Tauri 2 + NSIS**.
-Maintain the layout, translations, and artwork in one repository. Give each app
-its own half-body mascot, welcome message, and optional GitHub link.
+<img src="docs/preview.zh-Hans.png" width="640" alt="Kiri 中文 Windows 安装完成页">
 
-<table><tr>
-<td align="center"><img src="assets/kiri/sidebar.png" width="132" alt="Kiri"><br>Kiri</td>
-<td align="center"><img src="assets/mimi/sidebar.png" width="132" alt="Mimi"><br>Mimi</td>
-<td align="center"><img src="assets/viva/sidebar.png" width="132" alt="Viva"><br>Viva</td>
-<td align="center"><img src="assets/tick/sidebar.png" width="132" alt="Tick"><br>Tick</td>
-</tr></table>
+*Windows 原生预览截图，预览程序不会安装应用。*
 
-The images above are the actual sidebar assets. The preview and native installer
-share layout coordinates; Windows supplies the controls, fonts, and DPI scaling.
+## 本地预览
 
-<img src="docs/preview.en.png" width="640" alt="Kiri native Windows finish page in English">
-
-*Actual Windows CI capture of the native English finish page. The UI fixture installs no application.
-Current captures and the interactive gallery are produced by [Windows CI](.github/workflows/ci.yml).*
-
-- Distinct high-resolution character masters; lossless 656 × 1256, 24-bit sidebars
-  filtered to the actual native control size for smooth edges.
-- English, Simplified Chinese, and Japanese, including Tauri maintenance/error dialogs.
-- Native welcome and finish pages with an optional, click-only GitHub/Star link.
-- Pinned, hash-checked offline bundles. Application builds need only Node.js.
-- One command updates every registered app. No hand-maintained template copies.
-- Tauri continues to own installation, updates, uninstall, shortcuts, and WebView2.
-
-## Try it
-
-Requires Node.js 22 or newer. No npm dependencies or image-service credentials.
+需要 Node.js 22 或更新版本，无需安装 npm 依赖。
 
 ```sh
 git clone https://github.com/yuxino/desktop-installer.git
 cd desktop-installer
-npm test
 npm run build
 npm run preview
 ```
 
-Open `dist/preview.html` to switch between products, languages, and welcome/finish
-pages. This is a layout preview, not a Windows screenshot.
+打开 `dist/preview.html` 查看布局预览，可切换应用、语言和页面。原生预览编译需要 NSIS 3.11：
 
-With NSIS 3.11 on PATH, `npm run test:nsis` compiles a harmless preview executable
-for each product/language. These previews install and launch no application.
-Windows CI also opens all 12 native previews, checks Next/Back/Finish and the Run
-checkbox, and captures the welcome, directory, and finish pages. Download the
-`installer-previews-and-bundles` Actions artifact and open `windows-ui/` for PNGs,
-`index.html`, control bounds/text, and `results.json` (including actual DPI and executable hashes).
-The screenshots come from Windows, while the fixtures do not install app payloads;
-application installation, upgrades, and real-device DPI acceptance remain separate.
+```sh
+npm run test:nsis
+```
 
-## Use it in your app
+## 接入应用
 
-Fork or clone the repository, add your profile and artwork, then sync a pinned
-bundle into your Tauri project:
+按[接入说明](docs/integration.md)添加产品配置和素材，再同步到 Tauri 项目：
 
 ```sh
 node scripts/sync.mjs --project ../my-app --product my-app
 ```
 
-The [integration guide](docs/integration.md) covers profiles, artwork, an existing
-custom installer, build commands, and updating the bundle. It works with your
-own app name, publisher, and GitHub repository; the four included profiles are examples.
-
-For all registered apps under one parent directory:
+同步所有已登记应用：
 
 ```sh
 npm run sync -- --root ../
-npm run sync -- --root ../ --check
 ```
 
-Review and commit generated bundles in the application repositories. Updating
-this source does not silently change existing releases or consumers: run sync
-and build the next application version when you are ready.
+提交应用仓库中的生成文件并重新构建应用，已有安装包不会随本仓库更新。
+安装、更新和卸载仍由 Tauri 负责。
 
-## Scope
+## 文档与许可
 
-This project styles Windows NSIS installers. It does not issue signing
-certificates, remove OS security prompts, implement download progress inside
-your app, or replace its updater. macOS DMG/PKG styling is not included.
-See the [architecture decision](docs/architecture.md) for these boundaries.
+[设计说明](docs/architecture.md) · [素材来源](docs/artwork.md) · [贡献指南](CONTRIBUTING.md)
 
-## Contributing and license
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Code, templates, and included illustrations
-are available under the [MIT license](LICENSE). Character illustrations are
-AI-generated using each project's existing mascot as reference; generation
-records are in [docs/artwork.md](docs/artwork.md).
-Product names identify their respective projects; using this toolkit does not
-imply endorsement by those projects.
+代码、模板和角色素材采用 [MIT 许可](LICENSE)。角色素材由 AI 参考各应用已有形象生成。

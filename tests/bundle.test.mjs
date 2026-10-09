@@ -124,16 +124,16 @@ test('native layout fits the dialog, separates actions, and preserves MUI behavi
   for (const name of ['RUN','SHOWREADME']) assert.ok(fixture.includes(`MUI_FINISHPAGE_${name}_FUNCTION PreviewNoop`));
 });
 
-test('preview shell translations align and README screenshots match their language', () => {
+test('preview shell translations align and the Chinese README uses a matching screenshot', () => {
   const ui = JSON.parse(readFileSync(join(root, 'locales/preview.json')));
   assert.deepEqual(Object.keys(ui).sort(), Object.keys(languages).sort());
   for (const locale of Object.keys(languages)) {
     assert.deepEqual(Object.keys(ui[locale]).sort(), Object.keys(ui.en).sort());
     assert.ok(Object.values(ui[locale]).every(s => typeof s === 'string' && s.trim()));
   }
-  assert.match(readFileSync(join(root, 'README.md'), 'utf8'), /src="docs\/preview\.en\.png"/);
-  assert.doesNotMatch(readFileSync(join(root, 'README.md'), 'utf8'), /src="docs\/preview\.zh-Hans\.png"/);
-  assert.match(readFileSync(join(root, 'README_ZH.md'), 'utf8'), /src="docs\/preview\.zh-Hans\.png"/);
+  const readme = readFileSync(join(root, 'README.md'), 'utf8');
+  assert.match(readme, /src="docs\/preview\.zh-Hans\.png"/);
+  assert.doesNotMatch(readme, /src="docs\/preview\.en\.png"/);
 });
 
 test('tampered or oversized bundles fail before any output is written', t => {
