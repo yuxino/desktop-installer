@@ -109,8 +109,7 @@ node src-tauri/installer-theme/build.mjs --check
 ```
 
 Build the real Windows package through your normal pipeline. Review the native
-welcome and finish pages at 100%, 150%, and 200% scaling in English, Chinese,
-and Japanese; confirm all text fits, Run behaves normally, and the GitHub link
+welcome and finish pages at 100%, 150%, and 200% scaling in all seven supported languages; confirm all text fits, Run behaves normally, and the GitHub link
 only opens when clicked. Also exercise your app's existing upgrade path. This
 theme does not implement or change that path.
 

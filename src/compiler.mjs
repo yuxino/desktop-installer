@@ -6,7 +6,7 @@ import { digest, decodeBundle } from './consumer.mjs';
 
 export const root = fileURLToPath(new URL('..', import.meta.url));
 export const productIds = readdirSync(join(root, 'products')).filter(f => /^[a-z][a-z0-9-]*\.json$/.test(f)).map(f => f.slice(0, -5)).sort();
-export const languages = { en: ['English', 1033], 'zh-Hans': ['SimpChinese', 2052], ja: ['Japanese', 1041] };
+export const languages = { en: ['English', 1033], 'zh-Hans': ['SimpChinese', 2052], 'zh-Hant': ['TradChinese', 1028], ja: ['Japanese', 1041], de: ['German', 1031], ko: ['Korean', 1042], fr: ['French', 1036] };
 export const version = JSON.parse(readFileSync(join(root, 'package.json'))).version;
 export const layout = JSON.parse(readFileSync(join(root, 'src/layout.json')));
 export const readProduct = id => {
@@ -48,6 +48,10 @@ export function themeText(product) {
     'SetFont /LANG=1033 "Segoe UI" 9',
     'SetFont /LANG=2052 "Microsoft YaHei UI" 9',
     'SetFont /LANG=1041 "Yu Gothic UI" 9',
+    'SetFont /LANG=1028 "Microsoft JhengHei UI" 9',
+    'SetFont /LANG=1031 "Segoe UI" 9',
+    'SetFont /LANG=1042 "Malgun Gothic" 9',
+    'SetFont /LANG=1036 "Segoe UI" 9',
     '!define MUI_BGCOLOR "FFFFFF"', '!define MUI_TEXTCOLOR "303038"',
     '!define MUI_WELCOMEFINISHPAGE_BITMAP_STRETCH AspectFitHeight',
     '!define MUI_INSTFILESPAGE_COLORS "303038 FFFFFF"',

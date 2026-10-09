@@ -39,6 +39,10 @@ Var PreviewReport
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "Japanese"
+!insertmacro MUI_LANGUAGE "TradChinese"
+!insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "Korean"
+!insertmacro MUI_LANGUAGE "French"
 !define PRODUCTNAME "@APP@"
 !define VERSION "0.0.0"
 !ifndef PREVIEW_LANGUAGE_DIR
@@ -48,6 +52,10 @@ Var PreviewReport
 !include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\English.nsh"
 !include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\SimpChinese.nsh"
 !include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\Japanese.nsh"
+!include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\TradChinese.nsh"
+!include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\German.nsh"
+!include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\Korean.nsh"
+!include /CHARSET=UTF8 "${PREVIEW_LANGUAGE_DIR}\French.nsh"
 Function .onInit
   !ifdef PREVIEW_LANGUAGE
   StrCpy $LANGUAGE ${PREVIEW_LANGUAGE}

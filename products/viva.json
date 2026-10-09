@@ -6,12 +6,20 @@
   "description": {
     "en": "A calm, local workspace for Markdown and your next idea.",
     "zh-Hans": "给文字和灵感，留一个安静的地方。",
-    "ja": "Markdown と次のアイデアのための、静かな作業場所。"
+    "ja": "Markdown と次のアイデアのための、静かな作業場所。",
+    "zh-Hant": "在本機，為 Markdown 與下一個靈感留一個安靜的空間。",
+    "de": "Ein ruhiger, lokaler Arbeitsbereich für Markdown und Ihre nächste Idee.",
+    "ko": "Markdown과 다음 아이디어를 위한 조용한 로컬 작업 공간.",
+    "fr": "Un espace de travail local et calme pour Markdown et votre prochaine idée."
   },
   "tip": {
     "en": "Open a Markdown file or start a new note.",
     "zh-Hans": "打开一篇 Markdown，或者写下第一句话。",
-    "ja": "Markdown を開くか、新しい文章を書き始めましょう。"
+    "ja": "Markdown を開くか、新しい文章を書き始めましょう。",
+    "zh-Hant": "開啟 Markdown 檔案，或開始一篇新筆記。",
+    "de": "Öffnen Sie eine Markdown-Datei oder beginnen Sie eine neue Notiz.",
+    "ko": "Markdown 파일을 열거나 새 메모를 시작하세요.",
+    "fr": "Ouvrez un fichier Markdown ou commencez une nouvelle note."
   },
   "publisher": "yuxino"
 }

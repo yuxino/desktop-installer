@@ -6,12 +6,20 @@
   "description": {
     "en": "Schedule scripts and keep track of their runs in one place.",
     "zh-Hans": "安排脚本什么时候运行，也把每次结果看清楚。",
-    "ja": "スクリプトの実行予定と結果を、ひとつの場所で管理。"
+    "ja": "スクリプトの実行予定と結果を、ひとつの場所で管理。",
+    "zh-Hant": "安排腳本執行，並在同一處查看每次結果。",
+    "de": "Skripte planen und ihre Ausführungen an einem Ort verfolgen.",
+    "ko": "스크립트 실행을 예약하고 결과를 한곳에서 확인하세요.",
+    "fr": "Planifiez des scripts et suivez leurs exécutions au même endroit."
   },
   "tip": {
     "en": "Open Tick to set up your first task.",
     "zh-Hans": "打开 Tick，安排好第一件小事吧。",
-    "ja": "Tick を開いて、最初のタスクを設定しましょう。"
+    "ja": "Tick を開いて、最初のタスクを設定しましょう。",
+    "zh-Hant": "開啟 Tick，設定第一個工作。",
+    "de": "Öffnen Sie Tick, um Ihre erste Aufgabe einzurichten.",
+    "ko": "Tick을 열어 첫 작업을 설정하세요.",
+    "fr": "Ouvrez Tick pour configurer votre première tâche."
   },
   "publisher": "yuxino"
 }
